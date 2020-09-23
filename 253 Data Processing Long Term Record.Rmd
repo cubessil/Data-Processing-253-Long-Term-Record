@@ -1,0 +1,342 @@
+---
+title: "253 Data Processing Long Term Record"
+date: "Last Knitted `r format(Sys.Date(), '%d %b %Y')`"
+author: "Last edit by: ACF  | Created by: ACF"
+output: 
+  html_document:
+    df_print: paged
+    number_sections: no
+    toc: yes
+    toc_float: true
+    toc_depth: 3
+    code_folding: show
+editor_options: 
+  chunk_output_type: inline
+---
+```{r install, eval = FALSE}
+#devtools::install_github("KopfLab/isoreader", forse = TRUE)
+#devtools::install_github("cubessil/isoprocessCUBES", forse = TRUE) #general CUBESsil lab stuff
+#devtools::install_github("cubessil/CUBESSILclumpedmath", force = TRUE) #only for processing clumped data
+```
+
+```{r setup, message = FALSE, warning = FALSE}
+library(rlang)
+library(plotly)
+library(isoreader)
+library(tidyverse)
+library(isoprocessCUBES)
+library(CUBESSILclumpedmath)
+```
+
+# Data processing changes for each 253 session
+
+#### - Populate session information based on template below.
+#### - Copy/paste from your data reduction code for each session that renames, alters metadata, or culls analysis numbers. 
+#### - Accumulate sessions from most recent to least.
+
+___TEMPLATE START___
+
+### TEMPLATE: "Analysis Range" - "User" - "Session Name"
+
+User <- "__" -- make a list if more than one user for this time period. ex: c(ACF, BDK, JOV)
+
+session <-"__" -- name you gave your session
+
+session_date_start <- ####### -- use format "20200925"
+
+session_date_end <- ####### -- use format "20200925"
+
+session_analysis_start <- #####
+
+session_analysis_end <- #####
+
+```{r Data correction info - template}
+
+#change the code chunk name to include "Analysis # Range" - "User" - "Session Name"
+#use R chunk to compile all data processing changes you made throughout your 253 session 
+#comment out whole chunk by highlighting all text in chunk and use crl+shift+c . if you leave it uncommented, this Rmarkdown won't knit 
+
+```
+
+___TEMPLATE END___
+
+### 42224 to 44648 - ACF - AF10
+
+User <- "ACF" 
+
+session <-"AF10" 
+
+session_date_start <- 20200802
+
+session_date_end <- 20200909
+
+session_analysis_start <- 42224
+
+session_analysis_end <- 44648
+
+```{r 42224 to 44648 - ACF - AF10}
+# #Code examples: 
+# #flatlist.Cyc[  flatlist.Cyc$Analysis > 28131 & flatlist.Cyc$Analysis < 28139.8, "Identifier 1"] <- "all$dR_1000"  
+# #flatlist.Cyc[ flatlist.Cyc$`Identifier 1` == "KB_CI_576; EBOC" , "Identifier 1"] <- "eBOC_1000"
+# #flatlist.Cyc <- getmetadatafromAnalysis(flatlist.Cyc, 28207, 28215.7, 28198) #Can use this function to shift the metadata from one set of analysis numbers to another set; useful for occasions like carousel glitches or starting the sequence on the wrong line that result in the wrong sample information for a given sample
+# 
+# #TEMPLATE for AF10 session
+# #flatlist.Cyc <- flatlist.Cyc %>% change.donotuse.and.runinfo(#####, #####.99, TRUE, "COMMMENT") #DATE #FURTHER NOTES
+# 
+# #marking "Donotuse" or adding comment
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#   change.donotuse.and.runinfo(42266, 42275.99, TRUE, "eSSB_25, way colder than rest of pop in D47") %>% #20200803 #eSSB_25
+#   change.donotuse.and.runinfo(42306, 42315.99, TRUE, "unchecked pressure balance for some acquisitions") %>% #20200803 #ETH3, accidently left pressure balance button unchecked for a few acqusitions, and poor yield, didn't fully digest in acid
+#   change.donotuse.and.runinfo(42326, 42326.99, TRUE, "1 acq, trial gas") %>% #20200804 #SH$SHgasAug
+#   change.donotuse.and.runinfo(42347, 42356.99, TRUE, "mixed isotope values?") %>% #20200804 #IAEA-C2 looks like eSSB instead of C2 values in 18O and 13C
+#   change.donotuse.and.runinfo(42357, 42366.99, TRUE, "stir stick thrown") %>% #20200804 #ETH1, computer communication error
+#   change.donotuse.and.runinfo(42417, 42420.99, TRUE, "high initial yield. not all CO2?") %>% #20200805 #dR_25, 122 mbar initial volume. but then compressed to 6% to get 16V - did He get in there?
+#   #change.donotuse.and.runinfo(42466, 42475.99, TRUE, "stir stick thrown") #20200806 #IAEA-C2, thrown stir stick
+#   change.donotuse.and.runinfo(42570, 42570.99, TRUE, "cullinng 11th acquisitions") %>% #20200807 #ETH3, 11 acqs accidently 
+#   change.donotuse.and.runinfo(42636, 42639.99, TRUE, "low m44 voltages, very high initial bellows reading") %>% #20200809 #dR_25, very high initial bellows reading (~112mbar) but only 10V of CO2. 
+#   change.donotuse.and.runinfo(42755, 42766.99, TRUE, "eSSB_25, way colder than rest of pop in D47") %>% #20200811  #eSSB_25
+#   change.donotuse.and.runinfo(42792, 42801.99, TRUE, "ETH2 far fromr rest of reps in bulk isos") %>%  #20200811 #ETH2 different in bulk isos
+#   change.donotuse.and.runinfo(42802, 42811.99, TRUE, "thrown stick?")  %>%  #20200811 #IAEA-C1, far off in bulk isos
+#   change.donotuse.and.runinfo(42812, 42821.99, TRUE, "ETH2 far fromr rest of reps in bulk isos")  %>%  #20200811 #ETH2 far fromr rest of reps in bulk isos
+#   #change.donotuse.and.runinfo(42933, 42942.99, TRUE, "diff in bulk isos")  %>%  #20200813 #ETH2 far off in bulk isos
+#   change.donotuse.and.runinfo(43549, 43558.99, TRUE, "not enough gas")  %>%  #20200821 #TS3-16-20 not enough gas, low wt % carb
+#   change.donotuse.and.runinfo(43679, 43680.99, TRUE, "not enough gas") %>%   #20200823 #TS3-16-02, not enough gas
+#   change.donotuse.and.runinfo(43767, 43768.99, TRUE, "not enough gas")  %>%  #20200825 #TS3-16-20 not enough gas, low wt % carb
+#   change.donotuse.and.runinfo(43880, 43883.99, TRUE, "zeros offset in D47 space") %>%  #20200827 #zeros far from pop in D47vd47
+#   change.donotuse.and.runinfo(43894, 43903.99, TRUE, "ETH2 far fromr rest of reps in bulk isos")  %>%  #20200827  
+#   change.donotuse.and.runinfo(43904, 43913.99, TRUE, "eSSB_1000 very different from rest of pop in D47d47") %>%  #20200827 #eSSB_1000 very diff in D47 and d47 space
+#   change.donotuse.and.runinfo(43937, 43946.99, TRUE, "dR_25 far from pop in D47vd47") %>%  #20200828 #dR_25 far from pop in D47vd47
+#   change.donotuse.and.runinfo(44157, 44166.99, TRUE, "eSSB_1000 far from pop in d18Ovd13C space") %>% #20200831 #eSSB_1000 far from pop in d18Ovd13C space
+#   change.donotuse.and.runinfo(44187, 44196.99, TRUE, "TS3-16-20.gen2") %>%  #20200831 #low voltages, never reached 16V 
+#   change.donotuse.and.runinfo(44257, 44266.99, TRUE, "ETH1 far from rest of pop in single iso  and clumped space") %>% #20200901 #ETH1 far from pop in all isotopes
+#   change.donotuse.and.runinfo(44538, 44547.99, TRUE, "eSSB_1000 far from pop in D47d47 space") #20200907 #eSSB_1000 far from pop in D47d47 space
+# 
+# #renaming
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 44317 & flatlist.Cyc$Analysis < 44326.99, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-15" #20200902 #fixing TS3-16-15 naming issue
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 44457 & flatlist.Cyc$Analysis < 44466.99, "Identifier 1"] <- "JOV$SPB19-ML59-A"  #20200904 #fixing JOV naming issue
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 44467 & flatlist.Cyc$Analysis < 44476.99, "Identifier 1"] <- "JOV$SPB19-ML60-A"  #20200904 #fixing JOV naming issue
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 44497 & flatlist.Cyc$Analysis < 44505.99, "Identifier 1"] <- "JOV$SPB19-ML63-B"  #20200904 #fixing JOV naming issue
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 44507 & flatlist.Cyc$Analysis < 44516.99, "Identifier 1"] <- "JOV$SPB19-ML64-A"  #20200904 #fixing JOV naming issue
+```
+
+### 38838 to 41786 - ACF - AF9
+
+User <- "ACF"
+
+session <-"AF9"
+
+session_date_start <- 20200505
+
+session_date_end <- 20200716
+
+session_analysis_start <- 38838
+
+session_analysis_end <- 41786
+
+```{r 38838 to 41786 - ACF - AF9}
+# #TEMPLATE for AF9 session
+# #flatlist.Cyc <- flatlist.Cyc %>% change.donotuse.and.runinfo(#####, #####.99, TRUE, "COMMMENT") #DATE #FURTHER NOTES
+# 
+# #marking "Donotuse" or adding comment
+# flatlist.Cyc <- flatlist.Cyc %>%
+#    change.donotuse.and.runinfo(38779, 38790.99, TRUE, "far away from pop. in D47vd47 space") %>% #05/05/2020 #dR_25 , batch 2
+#    change.donotuse.and.runinfo(38813, 38824.99, TRUE, "far away from pop. in D47vd47 space") %>% #05/05/2020 #dR_25, batch 5
+#    change.donotuse.and.runinfo(38791, 38803.99, TRUE, "far away from pop. in D47vd47 space") %>% #05/05/2020 #ETH1. batch 3
+#    change.donotuse.and.runinfo(38956,38968.99,TRUE,"offset from other dR_25 in D47vd47") %>% #05/13/2020 #dR_25 offset from rest of pop in D47vd47 space and is rotating the D48 transfer function
+#    change.donotuse.and.runinfo(39124,39133.99,TRUE,"offset from other dR_25 in D47vd47") %>% #06/08/2020: dR_25 offset from rest of population in D47vd47 space in particular
+#    change.donotuse.and.runinfo(39214,39223.99,FALSE,"flagged as maybe D48excess") %>% #06/08/2020: ETH2 flagged as maybe D48excess in P2 of data reduction
+#    change.donotuse.and.runinfo(39234,39243.99,TRUE,"not enough gas") %>%#06/10/2020: CU Yule had low gas to start with, never got to 16V in run, do not use
+#    change.donotuse.and.runinfo(39268,39299,TRUE,"dropbox error: remnant") #during day 06/11/2020: carousel did drop so no carbs ran after Batch 44 (all$eSSB_25), so ETH2,2,1,3 are all remnant gases from eSSB_25 -- do not use. rename them all and then label Donotuse #ETH2,2,1,3 batch 39: flagging bc pressures slightly lower than 16000mV
+#   change.donotuse.and.runinfo(39382, 39392.99, FALSE, "offset in D47vd47 space from rest") %>%  #06/12/2020: dR_1000 falling off of rest of replicates. flagged on 06/18/2020 
+#   change.donotuse.and.runinfo(39332, 39341.99, TRUE, "no peak center, background, pressure balance") %>% #was labeled in sequence ETH2 (9.3 mg), needs to be CU YULE (10.3)
+#   change.donotuse.and.runinfo(39342, 39351.99, TRUE, "no peak center, background, pressure balance") %>% #was labeled ETH2 (8.9 mg) in sequence, needs to be ETH2 (9.3mg)
+#   change.donotuse.and.runinfo(39352, 39361.99, TRUE, "no peak center, background, pressure balance") %>% #was labeled ETH1 (12.0mg) in sequence, needs to be ETh2 (8.9mg)
+#   change.donotuse.and.runinfo(39362, 39371.99, TRUE, "no peak center, background, pressure balance") %>% #was labeled ETH1 (9.9) in sequence, needs to be labeled ETH1 (12.0mg)
+#   change.donotuse.and.runinfo(39372, 39381.99, TRUE, "no peak center, background, pressure balance") %>% #was labeled ETH3 (10.2) in sequence, needs to be labeled ETH1 (9.9mg)
+#   change.donotuse.and.runinfo(39523, 39546.99, TRUE, "possible thrown stir stick ") %>%  #zeros ran at 17000mV. adjusted the delay on the refill method from 50s to 40s and that seemed to get the zeros to run around 16000mV
+# #stir stick found not spinning Monday AM 06/15/2020. not sure when between Friday at 12pm and Monday 8:00am it stopped, marking the standards that ran over the weekend as 'possible thrown stir stick ' to flag but not throw out yet.
+#   change.donotuse.and.runinfo(39393, 39402.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH3, 10.2mg
+#   change.donotuse.and.runinfo(39403, 39412.99, FALSE, "possible thrown stir stick ") %>%  #all$CU YULE	9.4
+#   change.donotuse.and.runinfo(39413, 39422.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH1	9.6
+#   change.donotuse.and.runinfo(39423, 39432.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH2	11.3
+#   change.donotuse.and.runinfo(39433, 39442.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH3	9
+#   change.donotuse.and.runinfo(39443, 39452.99, FALSE, "possible thrown stir stick ") %>%  #all$CU YULE	11.3
+#   change.donotuse.and.runinfo(39453, 39462.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH1	13
+#   change.donotuse.and.runinfo(39463, 39472.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH2	10.5
+#   change.donotuse.and.runinfo(39473, 39482.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH3	9.4
+#   change.donotuse.and.runinfo(39483, 39492.99, FALSE, "possible thrown stir stick ") %>%  #all$CU YULE	9.1
+#   change.donotuse.and.runinfo(39493, 39502.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH1	10.5
+#   change.donotuse.and.runinfo(39503, 39512.99, FALSE, "possible thrown stir stick ") %>%  #all$ETH2	8.2
+#   change.donotuse.and.runinfo(39513, 39522.99, TRUE, "only 9 Acq, mistake. and possible thrown stir stick ") %>%  #all$ETH3	9.4
+#   change.donotuse.and.runinfo(39687, 39690.99, TRUE, "only single shot of eSSB_25 bottle. not enough gas") %>% #only single shot of eSSB_25 bottle. not enough gas
+#   change.donotuse.and.runinfo(39963, 39967.99, TRUE, "TS2-16-05, not enough gas, 9.35mg") %>% #06/20/2020: AF-NCF-TS2-16-05. not enough gas
+#   change.donotuse.and.runinfo(40373, 40382.99, TRUE, "sample id unknown. cull") %>%   #06/26/2020
+#   change.donotuse.and.runinfo(40473, 40482.99, TRUE, "TS3-16-19, not enough gas, 9.22mg") %>%   #06/27/2020
+#   change.donotuse.and.runinfo(40513, 40522.99, TRUE, "TS3-16-19, not enough gas, 11.39mg") %>%  #06/28/2020
+#   change.donotuse.and.runinfo(40703, 40712.99, FALSE, "possible thrown stir stick") %>%   #07/01/2020 #ETH2 9.56mg
+#   change.donotuse.and.runinfo(40713, 40722.99, FALSE, "possible thrown stir stick") %>%  #07/01/2020 #ACF$AF-NCF-TS2-16-02 11.22mg
+#   change.donotuse.and.runinfo(40733, 40742.99, FALSE, "possible thrown stir stick") %>%   #07/01/2020#ACF$AF-NCF-TS2-16-17 8.54mg
+#   change.donotuse.and.runinfo(40743, 40752.99, TRUE, "possible thrown stir stick") %>%   #07/01/2020 #ETH1 9.06mg
+#   change.donotuse.and.runinfo(39184,39193.99,TRUE,"low gas, below 16V") #07/01/2020 #dR_1000, Batch 36: not labelling as donotuse yet, but flagging
+#   change.donotuse.and.runinfo(39299,39310.99,TRUE,"funky zeros, maybe zero gas and eSSB_25 mixed?") %>% #07/01/2020
+#   change.donotuse.and.runinfo(	39433,39442.99,FALSE,"low gas, most Acq's below 16V")#07/01/2020 
+# 
+# #renaming
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 38779 & flatlist.Cyc$Analysis < 38790.99, "Identifier 1"] <- "all$zero"  #no gas was transferred ran zero from before
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 38791 & flatlist.Cyc$Analysis < 38803.99, "Identifier 1"] <- "all$zero"  #no gas was transferred ran zero from before
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39268 & flatlist.Cyc$Analysis < 39299, "Identifier 1"] <- "all$eSSB_25"  #during day 06/11/2020: carousel did drop so no carbs ran after Batch 44 (all$eSSB_25), so ETH2,2,1,3 are all remnant gases from eSSB_25 -- do not use. rename them all and then label Donotuse
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39312 & flatlist.Cyc$Analysis < 39322, "Identifier 1"] <- "all$dR_1000"  
+#   #flatlist.Cyc[  flatlist.Cyc$Analysis > 39717 & flatlist.Cyc$Analysis < 39726.99, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-10" #06/16/2020
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39332 & flatlist.Cyc$Analysis < 39341.99, "Identifier 1"] <- "all$CU YULE" #was labeled in sequence ETH2 (9.3 mg), needs to be CU YULE (10.3)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39332 & flatlist.Cyc$Analysis < 39341.99, "Identifier 2"] <- "10.3" #was labeled in sequence ETH2 (9.3 mg), needs to be CU YULE (10.3)
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 39342 & flatlist.Cyc$Analysis < 39351.99, "Identifier 1"] <- "all$ETH2" #was labeled ETH2 (8.9 mg) in sequence, needs to be ETH2 (9.3mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39342 & flatlist.Cyc$Analysis < 39351.99, "Identifier 2"] <- "9.3" #was labeled ETH2 (8.9 mg) in sequence, needs to be ETH2 (9.3mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39352 & flatlist.Cyc$Analysis < 39361.99, "Identifier 1"] <- "all$ETH2" #was labeled ETH1 (12.0mg) in sequence, needs to be ETh2 (8.9mg) 
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39352 & flatlist.Cyc$Analysis < 39361.99, "Identifier 2"] <- "8.9" #was labeled ETH1 (12.0mg) in sequence, needs to be ETh2 (8.9mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39362 & flatlist.Cyc$Analysis < 39371.99, "Identifier 1"] <- "all$ETH1" #was labeled ETH1 (9.9) in sequence, needs to be labeled ETH1 (12.0mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39362 & flatlist.Cyc$Analysis < 39371.99, "Identifier 2"] <- "12.0" #was labeled ETH1 (9.9) in sequence, needs to be labeled ETH1 (12.0mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39372 & flatlist.Cyc$Analysis < 39381.99, "Identifier 1"] <- "all$ETH1" #was labeled ETH3 (10.2) in sequence, needs to be labeled ETH1 (9.9mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 39372 & flatlist.Cyc$Analysis < 39381.99, "Identifier 2"] <- "9.9" #was labeled ETH3 (10.2) in sequence, needs to be labeled ETH1 (9.9mg)
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 40032 & flatlist.Cyc$Analysis < 40041.99, "Preparation"] <- "X" #06/21/2020: relabelling dR_1000 with Preparation = X
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 40523 & flatlist.Cyc$Analysis < 40532.99, "Identifier 1"] <- "JOV$SPB19-ML33-AB"  #06/28/2020
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 40823 & flatlist.Cyc$Analysis < 40832.99, "Identifier 1"] <- "all$eSSB_1000"  #07/03/2020
+```
+
+### 30339 to 33637 - ACF - AF8
+
+User <- "ACF"
+
+session <-"AF8"
+
+session_date_start <- 20190506
+
+session_date_end <- 20190716
+
+session_analysis_start <- 30339
+
+session_analysis_end <- 33637
+
+```{r 30339 to 33637 - ACF - "AF8"}
+# 
+# #pulled from May and June, name fixes from katie -> May 2019
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 29557 & flatlist.Cyc$Analysis < 29565.8, "Identifier 1"] <- "all$CU YULE"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 30223 & flatlist.Cyc$Analysis < 30231.8, "Identifier 1"] <- "Rehmus$Pin 178.36"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 30356 & flatlist.Cyc$Analysis < 30361.8, "Identifier 1"] <- "all$dR_25"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 30765 & flatlist.Cyc$Analysis < 30773.8, "Identifier 1"] <- "all$eSSB_25"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 30449 & flatlist.Cyc$Analysis < 30457.8, "Identifier 1"] <- "all$eSSB_1000"
+# flatlist.Cyc[  flatlist.Cyc$`Identifier 1` == "all$Merk", "Identifier 1"] <- "all$Merck"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 31836 & flatlist.Cyc$Analysis < 31844.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-26"  #sequence error where i forgot a normalrun_start caused the carousel  to get behind by one compared to the sequence labelling.so AF-NCF-TS2-16-26 was mislabeled as AF-NCF-TS2-16-24
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 31980 & flatlist.Cyc$Analysis < 31988.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-22"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 31989 & flatlist.Cyc$Analysis < 31997.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-12"
+# 
+# #getting metadata
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#   getmetadatafromAnalysis(29988,29991.8,29979) %>% 
+#   getmetadatafromAnalysis(29988,29991.8,29979) %>% 
+#   getmetadatafromAnalysis(29979,29987.8,29970) %>% 
+#   getmetadatafromAnalysis(29970,29978.8,29961) %>% 
+#   getmetadatafromAnalysis(29961,29969.8,29952) %>% 
+#   getmetadatafromAnalysis(29952,29960.8,29943) %>% 
+#   getmetadatafromAnalysis(29943,29951.8,29934) %>% 
+#   getmetadatafromAnalysis(29934,29942.8,29929) %>% 
+#   getmetadatafromAnalysis(29929,29933.8,29928) %>% 
+#   getmetadatafromAnalysis(30356,30361.8,30357) %>%#miss labeled
+#   getmetadatafromAnalysis(30999,31007.8,30990) %>%
+#   getmetadatafromAnalysis(30990,30998.8,30981) %>%
+#   getmetadatafromAnalysis(30981,30989.8,30972) %>%
+#   getmetadatafromAnalysis(30972,30980.8,30963)
+# 
+# ## 07/18/2019.... poweroutage at 7:34AM. ACF$Af-NCF-TS2-21.5Bspar-gen2 2.769 shouldbe fine, but lost 6 samples after that do to carousel glitches
+# 
+# #flatlist.Cyc <- flatlist.Cyc %>%
+#  #change.donotuse.and.comment(30963,30971.8,FALSE,"This sample was missing from the seq and needing the next samples to be pushed down") %>%
+#  #change.donotuse.and.comment(31127,31135.8,TRUE,"This EHT1 is a outlier, we don't know why") %>%
+#  #change.donotuse.and.comment(31181,31189.8,TRUE,"This EHT2 is a outlier, we don't know why")
+# 
+# ##NOTE: Marina Suerez and Dusin Harper from KU ran between 07/08/2019-07/13/2019, then i jumped back on the 253. Reference frame looks contintously stable so keeping ref frame.
+# 
+# #note that when using Analysis numbers from the flatlist.Cyc dataframe, the analyses include .1 to .7 at the end of each number. So, you need to account for that when defining the ranges. The function is set to read <= and >= for the upper and lower bounds, respectively.
+# 
+# flatlist.Cyc <- flatlist.Cyc %>%
+#   change.donotuse.and.runinfo(31392,31396,TRUE,"less then 12.5V") %>%  #dR_1000
+#   change.donotuse.and.runinfo(31612,31621,FALSE,"stir stick maybe thrown. monitor against further replicates") %>% #ACF$AF-NCF-TS2-16-03
+#   change.donotuse.and.runinfo(31621,31630,FALSE,"stir stick maybe thrown. monitor against further replicates") %>% #ACF$AF-NCF-TS2-16-12
+#   change.donotuse.and.runinfo(31630,31638,FALSE,"stir stick maybe thrown. monitor against further replicates") %>% #all$ETH1
+#   change.donotuse.and.runinfo(31639,31648,FALSE,"stir stick maybe thrown. monitor against further replicates") %>% #ACF$AF-NCF-TS2-16-14
+#   change.donotuse.and.runinfo(31648,31657,FALSE,"stir stick maybe thrown. monitor against further replicates") %>% #ACF$AF-NCF-TS2-16-22
+#   change.donotuse.and.runinfo(31708.1,31708.4,TRUE,"zero was cut short") %>% #zero was cut short
+#   change.donotuse.and.runinfo(31827.1,31836, TRUE, "not enough and sequence error, no gas dropped so this sample just ran previous sample's gas") %>%
+#   change.donotuse.and.runinfo(31827.1, 31836, TRUE, "low yield, less than 12.5V") %>%
+#   change.donotuse.and.runinfo(31908.1, 31917, TRUE, "low yield, less than 12.5V") %>%
+#   change.donotuse.and.runinfo(29625.1,29633.7,TRUE,"offset from the rest of population of dR_25, keep eye on")%>%
+#   change.donotuse.and.runinfo(32136.1,32136.7,TRUE,"low yield") %>%
+#   change.donotuse.and.runinfo(32853, 32862, TRUE, "low yield, weigh out more next time") %>%  #ACF$AF-NCF-TS2-16-10 4.226mg 07/16/2019
+#   change.donotuse.and.runinfo(33244, 33253, TRUE, "low yield, stir stick issue") %>% #all$ETH3 8.132mg 07/21/2019, stir stick blown
+#   change.donotuse.and.runinfo(33253, 33262, TRUE, "low yield, stir stick issue") %>% #ACF$AF-NCF-TS3-16-01 6.016mg 07/21/2019, stir stick blown
+#   change.donotuse.and.runinfo(33306, 33315, TRUE, "low yield, come gas pumped away bc of compressed air issue w/ valve8") %>% #ACF$AF-NCF-TS3-16-15 8.123mg 07/22/2019
+#   change.donotuse.and.runinfo(33315, 33324, FALSE, "cryocooler off, watch for d18O issues") %>% #ACF$AF-NCF-TS3-16-01 7.629mg 07/22/2019, cryocooler off
+#   change.donotuse.and.runinfo(33324, 33333, TRUE, "cryocooler off, watch for d18O issues") %>% #all$ETH1 4.916mg 07/22/2019, cryocooler off
+#   change.donotuse.and.runinfo(33333, 33342, TRUE, "cryocooler off, watch for d18O issues") %>%  #ACF$AF-NCF-TS3-16-15 6.972 07/22/2019, cryocooler off. cryowarmed too much for next sample to run.
+#   change.donotuse.and.runinfo(33370,33378, TRUE, "not enough gas, less than 12.5mV") %>% #AF-NCF-TS3-16-19
+#   change.donotuse.and.runinfo(33406,33415, TRUE, "not enough gas, less than 12.5 mV") %>%  #AF-NCF-TS3-16-01
+#   change.donotuse.and.runinfo(29625.1, 29633.7,TRUE,"offset from the rest of population of dR_25, keep eye on") %>% #maybe throw out if later in clumped processing this sample varies in D47 space greatly
+#   change.donotuse.and.runinfo(30963.1, 30972,TRUE,"bulk isotopes offset from the rest of population of ETH1") %>%
+#   change.donotuse.and.runinfo(31181.1, 31190.1,TRUE,"bulk isotopes offset from the rest of population of ETH2") %>%
+#   change.donotuse.and.runinfo(31392.1, 31397.1, TRUE, "sample too small") %>%
+#   change.donotuse.and.runinfo(31585.1, 31594.1, FALSE, "sample sat in trap 2 for ~60 mins bc of a FromPy read error between computers, keep an eye one")  %>%
+#   #looking at the D47vsd47 plot, it appears to fall on top of all the other dR_25 and is not labelled at D48excess... I'd keep for now
+#   change.donotuse.and.runinfo(31127.1, 31136.1, TRUE, "bulk isotopes offset from the rest of population of ETH1") %>%
+#   change.donotuse.and.runinfo(29378.1, 29383, TRUE, "bulk isotopes offset from rest of populations of ETH2") %>%
+#   change.donotuse.and.runinfo(30341.1, 30362, TRUE, "unexplained long strain fo dR_25 and then 5 eSSB_25") %>%  #dR_25 odd
+#   change.donotuse.and.runinfo(29255.1, 29264, TRUE, "dR_25 offset from rest of pop in bulk iso") %>%
+#   change.donotuse.and.runinfo(31809.1, 31818, FALSE,"ETH2 offset from rest of population. keep eye one") %>%
+# #after looking at standard residuals for ETHs and identifying outliers that I am a fence about culling
+#   change.donotuse.and.runinfo(29369.1,29378, TRUE, "ETH1 outlier from rest of population") %>% #i think keep
+#   change.donotuse.and.runinfo(31809.1,31818, TRUE, "ETH2 outlier from rest of population") %>% #i think cull
+#   change.donotuse.and.runinfo(30895.1,30904, FALSE, "ETH3 high positive outlier from rest of population") %>% #batch 127. i think keep
+#   change.donotuse.and.runinfo(30250.1,30259, FALSE, "ETH3 high positive outlier from rest of population") %>% #batch 81. i think keep
+#   change.donotuse.and.runinfo(29351.1,29360, TRUE, "ETH3 negative outlier from rest of population") %>%  #from 20150520. batch 28. i think cull
+#   change.donotuse.and.runinfo(29652.1,29661, TRUE, "ETH3 negative outlier from rest of population") %>%  #from 20190524. batch 50. i think cull
+#   change.donotuse.and.runinfo(32745.1,32753.7, TRUE, "ETH3 very positive compared to rest of population" ) %>% #from 20190715. i think cull
+#   change.donotuse.and.runinfo(32754.1, 32762.7, TRUE, "offest from rest of pop of ETh1 by a lot") %>%
+#   change.donotuse.and.runinfo(32853.1, 32861.7, TRUE, "maybe not enough gas? only 10.8 but ran ") %>%
+#   change.donotuse.and.runinfo(32862.1, 32870.7, FALSE, "first d18O cycles are off from average. want to wait to see if this rep falls away from rest of pop") %>%  #ETH2 7.725
+#   change.donotuse.and.runinfo(32871.1, 32879.7, FALSE, "first d18O cycles are off from average. want to wait to see if this rep falls away from rest of pop") %>%  #AF-NCF-TS2-16-28
+#   change.donotuse.and.runinfo(33213.1, 33213.9, TRUE, "test of computer communication") %>%
+#   change.donotuse.and.runinfo(33214.1, 33214.9, TRUE, "test of computer communication") %>%
+#   change.donotuse.and.runinfo(30678,30686, TRUE, "falls out of cluster in both D47 and d47 space") %>%
+#   change.donotuse.and.runinfo(33370.1,33378.9, TRUE, "not enough gas") %>%
+#     #added 20191118
+#   change.donotuse.and.runinfo(30125.1, 30132.9, TRUE, "falls out of cluster in d18Ovd13C space") %>%  #dR_1000 batch 97 07/01/2019
+#   change.donotuse.and.runinfo(32943.1, 32943.4, TRUE, "four cycles fall outside of cluster obviously") %>%  #AF-NCF-TS2-16-10
+#   change.donotuse.and.runinfo(31055.1, 31062.7, TRUE, "offset from rest of replicates") %>%  #eSSB_25
+#   change.donotuse.and.runinfo(30133.1, 30133.7, TRUE, "7 cycles that are not associated with full run") %>% #ETH1
+#   change.donotuse.and.runinfo(33217.1, 33225.7, TRUE, "offset from the rest of large population") %>% #ETH1
+#   change.donotuse.and.runinfo(32862.1, 32870.7, TRUE, "offset from rest of population") %>% #ETH2
+#   change.donotuse.and.runinfo(30051.1, 30059.7, TRUE, "offset from rest of population") %>% #ETH2 (could also consider culing batch 444, 98, 70)
+#   change.donotuse.and.runinfo(33279.1, 33287.7, TRUE, "offset from rest of population") %>% #eSSB_1000
+#   change.donotuse.and.runinfo(29844.1, 29852.7, TRUE, "offset from rest of population") %>% #eSSB_1000
+#   change.donotuse.and.runinfo(33226.1, 33234.7, TRUE, "offset from rest of population") %>% #IAEA-C2
+#   change.donotuse.and.runinfo(30125.1, 30133.7, TRUE, "offset from ETH1 group looking at std residuals") %>%  #ETH1, 30133, 97
+#   change.donotuse.and.runinfo(33397.1, 33405.7, TRUE, "offset from ETH1 group looking at std residuals") %>%  #ETH1, 33397, 437
+#   change.donotuse.and.runinfo(33599.1, 33607.7, TRUE, "offset from the population when looking at the Std residuals in clumped code") %>%   #ETH2, 33599, 459
+#   change.donotuse.and.runinfo(29979.1, 29987.7, TRUE, "isodat readin error, no ID1 or mass or prep for no reason")
+# 
+# #95: dR_1000: first few cucles fall outside of 1sgima in d18O (positive, by max 0.04)
+# #238: dR_1000. not enough gas, too few cycles for complete sample . looking at ind plots, looks like there is a weak linear relationship in both d13C and d18O overtime
+# #242: Cu YULE. first few cycles fall outside of the 1sigma in d18O (positive, by max .08).
+# #251: dR_25. first few cycles fall outside of the 1sigma in d18O (positive, by max .04)
+# #269: zero. cut short zero
+# #272: three outliers at the beginning of run all out of 2sigma. little noisy, but going to keep in data for now
+# #290: 4 outliers
+# #290: first three cycles are outliers in d18O compared to the rest of the pop
+# #308: gap in analysis number
+# #372: ETH1. outliers in first Acq in d18O
+# #373: AF-NCF-TS2-16-21.5Bspar-gen2. outliers in d18O also
+# #382: first few cycles in d18O are outliers but fall into place with the average by the 7th cycle .... AF-NCF-TS-17-ElyLS
+# #384: first few cycles in d18O are outliers but fall into place with the average by the 7th cycle .... ETH2, 32862.1 to 32870.7
+# #385: same tail behavior at 384, by 6 cycles d18O comes back into line with average ... AF-NCF-TS2-16-28, 32871.1 to 32879.7
+# #393: first few cycles in d18O are outliers but fall into place with average by 7th cycle ... AF-NCF-TS2-16-10
+```
+
+
