@@ -13,6 +13,7 @@ output:
 editor_options: 
   chunk_output_type: inline
 ---
+
 ```{r install, eval = FALSE}
 #devtools::install_github("KopfLab/isoreader", forse = TRUE)
 #devtools::install_github("cubessil/isoprocessCUBES", forse = TRUE) #general CUBESsil lab stuff
@@ -208,11 +209,11 @@ User <- "ACF"
 
 session <-"AF8"
 
-session_date_start <- 20190506
+session_date_start <- 20190702 (included data from previous runs in data reduction bc steady ref frame)
 
 session_date_end <- 20190716
 
-session_analysis_start <- 30339
+session_analysis_start <- 31489
 
 session_analysis_end <- 33637
 
@@ -340,3 +341,473 @@ session_analysis_end <- 33637
 ```
 
 
+### 23838 to 24446- ACF - AF7_Canary Islands
+
+User <- ACF
+
+session <- AF7
+
+session_date_start <- 20190214
+
+session_date_end <- 20200214
+
+session_analysis_start <- 23838
+
+session_analysis_end <- 24446
+
+```{r Data correction info - 23838 to 24446- ACF - AF7}
+
+# Running Canary Island travertines for Dr. Ana Maria Alonso-Zarza at the Universidad Complutense de Madrid. Run session from 02/14/2019 to 02/28/2019. 
+# This data is a preliminary dataset for Dr. Alonso-Zarza. The 253 mass spectrometer is working but not producing data with the precision we would ultimately like.  This data provides an intial look at the stable ad clumped isotope values and temperatures, and will be compared with later data replicates that will be produced once remaining machine issues are resolved. 
+# 
+# Samples | Weight (mg) | %CaCo (XRD)
+# --------|-------------|------------
+# AZ-16   | 122         | 95
+# AZU6-1  | 26          | 94
+# AZ-13A  | 328         | 95
+# PRE-6   | 25          | 100
+# PRE-9   | 37          | 100
+# HOR-1   | 69          | 100
+# HOR-6   | 137         | 100
+# 
+# #renaming 
+# flatlist.Cyc[ flatlist.Cyc$'Identifier 1' == "ACF$HOR-16" , "Identifier 1"] <- "ACF$HOR-6"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 24312 & flatlist.Cyc$Analysis < 24321, "Identifier 1"] <- "all$eSSB_1000" #mislabeled as eSSB2_25
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 23849 & flatlist.Cyc$Analysis < 23858, "Identifier 1"] <- "all$eSSB_25" #removing "2" from name to match other gases
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 23867 & flatlist.Cyc$Analysis < 23876, "Identifier 1"] <- "all$eSSB_25"  #removing "2" from name to match other gases
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 24366 & flatlist.Cyc$Analysis < 24375, "Identifier 1"] <- "ACF$AZU6-1"  #AZU6-1 mislabeled as ETH1 (AZU6-1 ran first)
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 24375 & flatlist.Cyc$Analysis < 24384, "Identifier 1"] <- "all$ETH1"  #ETH1 mislabeled as AZU6-1 (ETH1 ran second)
+# 
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#   mutate(Donotuse = ifelse(Analysis > 24164 & Analysis < 24176, TRUE, FALSE))
+# 
+# #water trap was warm for full day on 02/18/2019. below labelling notes this error
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#   mutate(runinfo = ifelse(Analysis > 24146 & Analysis < 24156, "ran warm water trap, use replicate thoughtfully", 
+#                           ifelse(Analysis > 24155 & Analysis < 24165, "ran warm water trap, use replicate thoughtfully", 
+#                                  ifelse(Analysis > 24164 & Analysis < 24176, "Do not use. 11 acq, and large d18O std dev. ran warm water trap, use replicate thoughtfully",
+#                                          ifelse(Analysis > 24175 & Analysis < 24185, "ran warm water trap, use replicate thoughtfully", 
+#                                                 ifelse(Analysis > 24184 & Analysis < 24194, "ran warm water trap, use replicate thoughtfully", 
+#                                                        ifelse(Analysis > 24201 & Analysis < 24212, "ran warm water trap, use replicate thoughtfully",
+#                                                                ifelse(Analysis > 24211 & Analysis < 24221, "ran warm water trap, use replicate thoughtfully",
+#                                                                                                                                                    ""))))))))
+# #####Subsetting to get data from 02/18 02/21/2019}
+# #whole day ran with a warm water trap (02/18), so I ran the same suite of samples on 02/19 with a cold water trap
+# #need to compare the data and see if 02/18 data are usable replicates, so copying plots from above
+# 
+# flatlist.Cyc_0218to0221 <- flatlist.Cyc %>% filter(Analysis > 24147 & Analysis < 24446 ) 
+# 
+# combined_data_acquisition_0218to0221 <- combined_data_acquisition %>% filter(Analysis > 24147 & Analysis < 24446 )
+# 
+# 
+# Samples | Weight (mg) | %CaCo (XRD) | Replicates|        | Notes
+# --------|-------------|-------------|-----------|--------|------------------------------------------------
+#         |             |             |           | Attempted | Usable    
+# AZ-16   | 122         | 95          | 2         | 2      | all clean on both 1000C and 25C D48excess
+# AZU6-1  | 26          | 94          | 3         | 2      |all with 1000C D48excess but not 25C D48excess
+# AZ-13A  | 328         | 95          | 2         | 2      | all clean on both 1000C and 25C D48excess
+# PRE-6   | 25          | 100         | 3         | 2      |1 with both D48excess, 1 with 1000C but not 25C
+# PRE-9   | 37          | 100         | 3         | 3      |all clean on both 1000C and 25C D48excess
+# HOR-1   | 69          | 100         | 2         | 0      | all with both 1000C and 25C excess
+# HOR-6   | 137         | 100         | 2         | 2      | all clean on both 1000C and 25C D48excess
+
+```
+
+### 15027 to 15734 - ACF - AF6
+
+User <- ACF 
+
+session <- AF6
+
+session_date_start <- 20180618
+
+session_date_end <- 20180627
+
+session_analysis_start <- 15027
+
+session_analysis_end <- 15734
+
+```{r Data correction info - 15027 to 15734 - ACF - AF6}
+
+#"Raw Data Processing to CIDS - LIDIvTrad and Knc samples  "
+# 
+# for (ID in c(15605:15613)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$eIB2_1000"
+# }
+# for (ID in c(15643:15651)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$eIB2_1000"
+# }
+# 
+# ##Need to go back and rename adam's Carraras to correct Carrara.CIT
+# for (ID in c(15027:15035)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# 
+# for (ID in c(15063:15071)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# 
+# for (ID in c(15265:15273)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# 
+# for (ID in c(15072:15080)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$ETH_3"
+# }
+# 
+# for (ID in c(15045:15053)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$ETH_3"
+# }
+# 
+# for (ID in c(15184:15192)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$eIB2_1000"
+# }
+```
+
+### 14432 to 14859 - ACF - Canary Islands_1
+
+User <- ACF
+
+session <- Canary Islands_1
+
+session_date_start <- 20180522
+
+session_date_end <- 20180527
+
+session_analysis_start <- 14432
+
+session_analysis_end <- 14859
+
+```{r Data correction info - 14432 to 14859 - ACF - Canary Islands_1}
+
+# for (ID in c(12997:13005)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$TV04"
+# }
+# for (ID in c(13006:13014)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$Merck"
+# }
+# for (ID in c(13015:13023)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$CIT Carrara"
+# } 
+# for (ID in c(13024:13032)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$ETH_3"
+# }
+# for (ID in c(13691:13699)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$e1B2_25"
+# }
+# for (ID in c(13358:13366)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$d1B2_1000"
+# }
+# for (ID in c(12626:12634)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# for (ID in c(13344:13352)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# for (ID in c(13973:13981)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$ETH_2"
+# }
+# 
+# ##Renaming idenitifer1's from 5/24/2018, didn't advance carousel to proper hole, so all data is offset with label by one
+# 
+# #CIT Carrara data mislabeled in isodat as TV04
+# for (ID in c(14565:14573)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# 
+# #TV04 data mislabeled in isodat as AZ-16A
+# for (ID in c(14574:14582)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$TV04"
+# }
+# 
+# #AZ-16A data mislabeled in isodat as AZ-13A
+# for (ID in c(14583:14591)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "ACF$AZ-16A"
+# }
+# 
+# # AZ-13A data mislabeled in isodat as POZ-11
+# for (ID in c(14592:14600)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "ACF$AZ-13A"
+# }
+# 
+# #POZ-11 data mislabeled in isodat as AZU6-1
+# for (ID in c(14601:14609)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "ACF$POZ-11"
+# }
+# 
+# #AZU6-1 not run
+
+```
+
+### 12626 to 14017- ACF - LTD_1
+
+User <- ACF
+
+session <- LTD_1
+
+session_date_start <- 20180410
+
+session_date_end <- 20200502
+
+session_analysis_start <- 12626
+
+session_analysis_end <- 14017
+
+```{r Data correction info - 12626 to 14017- ACF - LTD_1}
+
+# for (ID in c(12997:13005)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$TV04"
+# }
+# for (ID in c(13006:13014)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$Merck"
+# }
+# for (ID in c(13015:13023)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$CIT Carrara"
+# } 
+# for (ID in c(13024:13032)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$ETH_3"
+# }
+# for (ID in c(13691:13699)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$e1B2_25"
+# }
+# for (ID in c(13358:13366)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$d1B2_1000"
+# }
+# for (ID in c(12626:12634)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# for (ID in c(13344:13352)){
+#   rawdata[ rawdata$Analysis == ID , "Identifier 1"] <- "all$Carrara.CIT"
+# }
+# for (ID in c(13973:13981)){
+#   rawdata[ rawdata$Analysis == ID, "Identifier 1"] <- "all$ETH_2"
+# }  
+#   
+#   rawdata_filtered <- subset(rawdata, v44.mV >10000)
+#   rawdata_filtered <- subset(rawdata_filtered, Analysis < 17462 | Analysis >17469)
+#   #getting rid of the eBB_1000 from 9/15/2018
+#   rawdata2<- subset(rawdata_filtered, as.numeric(Analysis) < 17534  | as.numeric(Analysis) > 17542)
+#   
+#   flatlist.Cyc <- clumpedbyCycfixref(rawdata2)
+#   combined_data_acquisition <- clumpedCyctoAcquisition(flatlist.Cyc)
+#   combined_data_group <- clumpedAcquisitiontoRun(combined_data_acquisition)
+
+```
+
+### 5059 to 6157 - ACF - AF5
+
+User <- ACF
+
+session <- AF5
+
+session_date_start <- 20170705
+
+session_date_end <- 20170724
+
+session_analysis_start <- 5059
+
+session_analysis_end <- 6157
+
+```{r Data correction info - 5059 to 6157 - ACF - AF5}
+
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5061 & flatlist.Cyc$Analysis < 5069.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 1
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5071 & flatlist.Cyc$Analysis < 5079.8, "Identifier 1"] <- "all$dBBHG" #batch 2
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5080 & flatlist.Cyc$Analysis < 5098.8, "Identifier 1"] <- "all$TV04" #batch 3 
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5089 & flatlist.Cyc$Analysis < 5097.8, "Identifier 1"] <- "all$eYSHG" #batch 4
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5098 & flatlist.Cyc$Analysis < 5106.8, "Identifier 1"] <- "all$NBS19" #batch 5
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5170 & flatlist.Cyc$Analysis < 5178.8, "Identifier 1"] <- "all$eYSEG" #batch 6
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5179 & flatlist.Cyc$Analysis < 5187.8, "Identifier 1"] <- "all$TV04" #batch 7
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5233 & flatlist.Cyc$Analysis < 5241.8, "Identifier 1"] <- "all$CU TS" #batch 8
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5242 & flatlist.Cyc$Analysis < 5250.8, "Identifier 1"] <- "all$dBBEG" #batch 9
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5251 & flatlist.Cyc$Analysis < 5259.8, "Identifier 1"] <- "all$dBBHG" #batch 10
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5287 & flatlist.Cyc$Analysis < 5295.8, "Identifier 1"] <- "all$CU TS" #batch 11
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5296 & flatlist.Cyc$Analysis < 5304.8, "Identifier 1"] <- "all$eYSHG" #batch 12
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5341 & flatlist.Cyc$Analysis < 5349.8, "Identifier 1"] <- "all$TV04" #batch 13
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5350 & flatlist.Cyc$Analysis < 5358.8, "Identifier 1"] <- "all$eYSHG" #batch 14
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5359 & flatlist.Cyc$Analysis < 5367.8, "Identifier 1"] <- "all$eYSEG" #batch 15
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5386 & flatlist.Cyc$Analysis < 5394.8, "Identifier 1"] <- "all$NBS19" #batch 16
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5406 & flatlist.Cyc$Analysis < 5412.8, "Identifier 1"] <- "all$eYSEG" #batch 17. not enough cycles
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5441 & flatlist.Cyc$Analysis < 5449.8, "Identifier 1"] <- "all$dBBEG" #batch 18
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5450 & flatlist.Cyc$Analysis < 5456.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 19
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5513 & flatlist.Cyc$Analysis < 5521.8, "Identifier 1"] <- "all$dBBHG" #batch 20
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5558 & flatlist.Cyc$Analysis < 5566.8, "Identifier 1"] <- "all$TV04" #batch 21
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5567 & flatlist.Cyc$Analysis < 5575.8, "Identifier 1"] <- "all$NIST 88B" #batch 22
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5577 & flatlist.Cyc$Analysis < 5585.8, "Identifier 1"] <- "all$eYSEG" #batch 23
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5595 & flatlist.Cyc$Analysis < 5603.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-10" #batch 24
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5604 & flatlist.Cyc$Analysis < 5612.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-12" #batch 25
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5613 & flatlist.Cyc$Analysis < 5621.8, "Identifier 1"] <- "all$TV04" #batch 26
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5622 & flatlist.Cyc$Analysis < 5630.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-14" #batch 27
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5632 & flatlist.Cyc$Analysis < 5640.8, "Identifier 1"] <- "all$dBBHG" #batch 28
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5641 & flatlist.Cyc$Analysis < 5649.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-25" #batch 29
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5650 & flatlist.Cyc$Analysis < 5658.8, "Identifier 1"] <- "all$NBS18" #batch 30
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5695 & flatlist.Cyc$Analysis < 5703.8, "Identifier 1"] <- "all$eYSHG" #batch 31
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5715 & flatlist.Cyc$Analysis < 5723.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 32
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5724 & flatlist.Cyc$Analysis < 5732.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-14" #batch 33
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5733 & flatlist.Cyc$Analysis < 5741.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-25" #batch 34
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5742 & flatlist.Cyc$Analysis < 5750.8, "Identifier 1"] <- "all$dBBEG" #batch 35
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5751 & flatlist.Cyc$Analysis < 5759.8, "Identifier 1"] <- "all$CU TS" #batch 36
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5760 & flatlist.Cyc$Analysis < 5768.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-26" #batch 37
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5769 & flatlist.Cyc$Analysis < 5777.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-01" #batch 38
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5778 & flatlist.Cyc$Analysis < 5786.8, "Identifier 1"] <- "all$NBS18" #batch 39
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5787 & flatlist.Cyc$Analysis < 5795.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-17" #batch 40
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5796 & flatlist.Cyc$Analysis < 5804.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-15" #batch 41
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5805 & flatlist.Cyc$Analysis < 5813.8, "Identifier 1"] <- "all$TV04" #batch 42
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5814 & flatlist.Cyc$Analysis < 5822.8, "Identifier 1"] <- "all$dBBHG" #batch 43
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5823 & flatlist.Cyc$Analysis < 5831.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 44
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5832 & flatlist.Cyc$Analysis < 5840.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-26" #batch 45
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5841 & flatlist.Cyc$Analysis < 5849.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-01" #batch 46
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5850 & flatlist.Cyc$Analysis < 5858.8, "Identifier 1"] <- "all$CU TS" #batch 47
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5859 & flatlist.Cyc$Analysis < 5867.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-17" #batch 48
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5868 & flatlist.Cyc$Analysis < 5876.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-10" #batch 49
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5877 & flatlist.Cyc$Analysis < 5885.8, "Identifier 1"] <- "all$CU YULE" #batch 50
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5886 & flatlist.Cyc$Analysis < 5887.8, "Identifier 1"] <- "all$Sarah CO2 tank" #batch 51
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5888 & flatlist.Cyc$Analysis < 5896.8, "Identifier 1"] <- "all$eYSEG" #batch 52
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5897 & flatlist.Cyc$Analysis < 5905.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-12" #batch 53
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5906 & flatlist.Cyc$Analysis < 5914.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-14" #batch 54
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5915 & flatlist.Cyc$Analysis < 5923.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-25" #batch 55
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5924 & flatlist.Cyc$Analysis < 5932.8, "Identifier 1"] <- "all$NBS18" #batch 56
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5951 & flatlist.Cyc$Analysis < 5959.8, "Identifier 1"] <- "all$dBBEG" #batch 57
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5960 & flatlist.Cyc$Analysis < 5968.8, "Identifier 1"] <- "all$eYSEG" #batch 58
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5969 & flatlist.Cyc$Analysis < 5977.8, "Identifier 1"] <- "all$eYSHG" #batch 59
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 5987 & flatlist.Cyc$Analysis < 5994.8, "Identifier 1"] <- "all$TV04" #batch 60
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 6086 & flatlist.Cyc$Analysis < 6094.8, "Identifier 1"] <- "all$dBBHG" #batch 61
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 6104 & flatlist.Cyc$Analysis < 6112.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 62
+ # flatlist.Cyc[  flatlist.Cyc$Analysis > 6149 & flatlist.Cyc$Analysis < 6157.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 63
+ # 
+ # flatlist.Cyc <- flatlist.Cyc %>% 
+ #    change.donotuse.and.runinfo(5886.1, 5887.8,TRUE,"not enough cycles") %>%  #Sarah CO2 tank
+ #    change.donotuse.and.runinfo(5613.1, 5621.8, TRUE, "completely offset from rest of TV04") #TV04 
+
+```
+
+### 3524 to 4538 - ACF - AF4
+
+User <- ACF
+
+session <- AF4
+
+session_date_start <- 20170421
+
+session_date_end <- 20170507
+
+session_analysis_start <- 3524
+
+session_analysis_end <- 4538
+
+```{r Data correction info - 3524 to 4538 - ACF - AF4}
+# 
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3524 & flatlist.Cyc$Analysis < 3532.8, "Identifier 1"] <- "all$TV04" #batch 1
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3533 & flatlist.Cyc$Analysis < 3541.8, "Identifier 1"] <- "all$NBS18" #batch 2
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3542 & flatlist.Cyc$Analysis < 3550.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 3
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3551 & flatlist.Cyc$Analysis < 3559.8, "Identifier 1"] <- "all$CIT HIS" #batch 4
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3560 & flatlist.Cyc$Analysis < 3568.8, "Identifier 1"] <- "all$CU YULE" #batch 5
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3569 & flatlist.Cyc$Analysis < 3577.8, "Identifier 1"] <- "all$dBBEG" #batch 6
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3578 & flatlist.Cyc$Analysis < 3586.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 7
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3587 & flatlist.Cyc$Analysis < 3595.8, "Identifier 1"] <- "all$eYSEG" #batch 8
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3596 & flatlist.Cyc$Analysis < 3604.8, "Identifier 1"] <- "all$dBBHG" #batch 9
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3605 & flatlist.Cyc$Analysis < 3613.8, "Identifier 1"] <- "all$NBS18" #batch 10
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3616 & flatlist.Cyc$Analysis < 3624.8, "Identifier 1"] <- "all$eBBHG" #batch 11
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3625 & flatlist.Cyc$Analysis < 3633.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-03" #batch 14
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3634 & flatlist.Cyc$Analysis < 3642.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-12" #batch 15
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3643 & flatlist.Cyc$Analysis < 3653.8, "Identifier 1"] <- "all$eYSEG" #batch 16
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3654 & flatlist.Cyc$Analysis < 3673.8, "Identifier 1"] <- "all$TV04" #batch 17. too many cycles!
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3674 & flatlist.Cyc$Analysis < 3682.8, "Identifier 1"] <- "all$dBBHG" #batch 18
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3737 & flatlist.Cyc$Analysis < 3747.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 19
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3748 & flatlist.Cyc$Analysis < 3748.8, "Identifier 1"] <- "all$eYSEG" #batch 20
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3749 & flatlist.Cyc$Analysis < 3749.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 21
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3750 & flatlist.Cyc$Analysis < 3759.8, "Identifier 1"] <- "all$eYSEG" #batch 22
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3790 & flatlist.Cyc$Analysis < 3798.8, "Identifier 1"] <- "all$dBBEG" #batch 23
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3866 & flatlist.Cyc$Analysis < 3874.8, "Identifier 1"] <- "all$NBS19" #batch 24
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3875 & flatlist.Cyc$Analysis < 3883.8, "Identifier 1"] <- "all$eYSHG" #batch 25
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3884 & flatlist.Cyc$Analysis < 3893.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 26
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3939 & flatlist.Cyc$Analysis < 3947.8, "Identifier 1"] <- "all$TV04" #batch 27
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 3958 & flatlist.Cyc$Analysis < 3966.8, "Identifier 1"] <- "all$dBBEG" #batch 28
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4021 & flatlist.Cyc$Analysis < 4029.8, "Identifier 1"] <- "all$eYSHG" #batch 29
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4039 & flatlist.Cyc$Analysis < 4047.8, "Identifier 1"] <- "all$NBS19" #batch 30
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4048 & flatlist.Cyc$Analysis < 4056.8, "Identifier 1"] <- "all$TV04" #batch 31
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4057 & flatlist.Cyc$Analysis < 4065.8, "Identifier 1"] <- "all$NBS18" #batch 32
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4066 & flatlist.Cyc$Analysis < 4074.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-14" #batch 33
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4076 & flatlist.Cyc$Analysis < 4084.8, "Identifier 1"] <- "all$eYSHG" #batch 34
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4085 & flatlist.Cyc$Analysis < 4093.8, "Identifier 1"] <- "all$dBBEG" #batch 35
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4094 & flatlist.Cyc$Analysis < 4102.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-15" #batch 36
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4103 & flatlist.Cyc$Analysis < 4111.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 37
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4112 & flatlist.Cyc$Analysis < 4120.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-17" #batch 38
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4121 & flatlist.Cyc$Analysis < 4129.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-21" #batch 39
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4130 & flatlist.Cyc$Analysis < 4138.8, "Identifier 1"] <- "all$NBS19" #batch 40
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4139 & flatlist.Cyc$Analysis < 4147.8, "Identifier 1"] <- "all$eYSEG" #batch 41
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4148 & flatlist.Cyc$Analysis < 4156.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-22" #batch 42
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4157 & flatlist.Cyc$Analysis < 4165.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-25" #batch 43
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4166 & flatlist.Cyc$Analysis < 4174.8, "Identifier 1"] <- "all$TV04" #batch 44
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4175 & flatlist.Cyc$Analysis < 4183.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-26" #batch 45
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4184 & flatlist.Cyc$Analysis < 4192.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-36" #batch 46
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4193 & flatlist.Cyc$Analysis < 4201.8, "Identifier 1"] <- "all$CU TS" #batch 47
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4203 & flatlist.Cyc$Analysis < 4211.8, "Identifier 1"] <- "all$dBBHG" #batch 48
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4212 & flatlist.Cyc$Analysis < 4220.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-35" #batch 49
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4221 & flatlist.Cyc$Analysis < 4229.8, "Identifier 1"] <- "all$TV04" #batch 50
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4230 & flatlist.Cyc$Analysis < 4238.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-01" #batch 51
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4239 & flatlist.Cyc$Analysis < 4247.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-02" #batch 52
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4248 & flatlist.Cyc$Analysis < 4256.8, "Identifier 1"] <- "all$NBS19" #batch 53
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4257 & flatlist.Cyc$Analysis < 4265.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-03" #batch 54
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4266 & flatlist.Cyc$Analysis < 4274.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-10" #batch 55
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4275 & flatlist.Cyc$Analysis < 4283.8, "Identifier 1"] <- "all$eYSEG" #batch 56
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4284 & flatlist.Cyc$Analysis < 4292.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 57
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4293 & flatlist.Cyc$Analysis < 4301.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-12" #batch 58
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4302 & flatlist.Cyc$Analysis < 4310.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-15" #batch 59
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4311 & flatlist.Cyc$Analysis < 4319.8, "Identifier 1"] <- "all$NBS18" #batch 60
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4320 & flatlist.Cyc$Analysis < 4328.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-03" #batch 61
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4329 & flatlist.Cyc$Analysis < 4337.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-17" #batch 62
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4338 & flatlist.Cyc$Analysis < 4346.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-19" #batch 63
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4337 & flatlist.Cyc$Analysis < 4356.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 64
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4357 & flatlist.Cyc$Analysis < 4365.8, "Identifier 1"] <- "all$dBBEG" #batch 65
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4366 & flatlist.Cyc$Analysis < 4374.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 66
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4375 & flatlist.Cyc$Analysis < 4384.8, "Identifier 1"] <- "all$TV04" #batch 67
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4385 & flatlist.Cyc$Analysis < 4393.8, "Identifier 1"] <- "all$CU TS" #batch 68
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4394 & flatlist.Cyc$Analysis < 4402.8, "Identifier 1"] <- "all$NBS19" #batch 69
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4403 & flatlist.Cyc$Analysis < 4411.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-19" #batch 70
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4412 & flatlist.Cyc$Analysis < 4420.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-15" #batch 71
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4421 & flatlist.Cyc$Analysis < 4429.8, "Identifier 1"] <- "all$dBBHG" #batch 72
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4430 & flatlist.Cyc$Analysis < 4438.8, "Identifier 1"] <- "all$CU TS" #batch 73
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4439 & flatlist.Cyc$Analysis < 4447.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-12" #batch 74
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4448 & flatlist.Cyc$Analysis < 4456.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-10" #batch 75
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4457 & flatlist.Cyc$Analysis < 4465.8, "Identifier 1"] <- "all$NBS18" #batch 76
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4466 & flatlist.Cyc$Analysis < 4474.8, "Identifier 1"] <- "ACF$AF-NCF-TS3-16-02" #batch 77
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4475 & flatlist.Cyc$Analysis < 4475.8, "Identifier 1"] <- "all$NBS19" #batch 78
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4476 & flatlist.Cyc$Analysis < 4484.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-36" #batch 79
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4485 & flatlist.Cyc$Analysis < 4493.8, "Identifier 1"] <- "all$eYSEG" #batch 80
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4494 & flatlist.Cyc$Analysis < 4502.8, "Identifier 1"] <- "all$NBS19" #batch 81
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4503 & flatlist.Cyc$Analysis < 4511.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-17" #batch 82
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4512 & flatlist.Cyc$Analysis < 4520.8, "Identifier 1"] <- "ACF$AF-NCF-TS2-16-02" #batch 83
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4521 & flatlist.Cyc$Analysis < 4529.8, "Identifier 1"] <- "all$Carrara.CIT" #batch 84
+#  flatlist.Cyc[  flatlist.Cyc$Analysis > 4530 & flatlist.Cyc$Analysis < 4538.8, "Identifier 1"] <- "all$CU YULE" #batch 85
+#  
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#     change.donotuse.and.runinfo(4214, 4220.8,TRUE,"not enough cycles") %>%  #AF-NCF-TS2-16-35 batch45
+#     change.donotuse.and.runinfo(4386, 4393.8, TRUE, "not enough cycles") %>% #CU TS batch62
+#     change.donotuse.and.runinfo(4067, 4074.8, TRUE, "not enough gas") %>% #AF-NCF-TS2-16-14 batch 28
+#     change.donotuse.and.runinfo(4343, 4346.8, TRUE, "not enough gas") %>% #Carrara.CIT batch58
+#     change.donotuse.and.runinfo(3750, 3759.8, TRUE, "offset from the rest of population") %>% #eYS batch17
+#     change.donotuse.and.runinfo(4338, 4346.8, TRUE, "offset from the rest of population") %>% #Carrara.CIT batch58
+#     change.donotuse.and.runinfo(3738, 3747.8, TRUE, "offset from the rest of population") #Carrara.CIT batch 16
+```
+
+### 2644 to 3333 - ACF - AF3
+
+User <- ACF
+
+session <- AF3
+
+session_date_start <- 20170225
+
+session_date_end <- 20170317
+
+session_analysis_start <- 2644
+
+session_analysis_end <- 3333
+
+```{r Data correction info - 2644 to 3333 - ACF - AF3}
+
+#note from ACF 20200928 - searched and cannot find data correction/processing content for AF3, except for this note: "Ran throughout 02/25/2017 to 03/17/2017. Took a few standards from May to complete the reference frame (have enought TV04 to correct using Katie's code). I'm dubious about trusting replicates from this session b/c of the weak reference frame. 
+
+```
+
+##### note that AF1-AF2 don't really exist bc they were session where I was learning data production and I don't have data processing record of those times, but I started my session numbering system at AF3 (idk, early grad school decisions...). Also I didn't start to consistently use AF# format until AF6, so there are mismatched session labels. 
