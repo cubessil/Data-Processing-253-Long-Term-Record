@@ -2853,7 +2853,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">253 Data Processing Long Term Record</h1>
 <h4 class="author">Last edit by: ACF | Created by: ACF</h4>
-<h4 class="date">Last Knitted 23 Sep 2020</h4>
+<h4 class="date">Last Knitted 28 Sep 2020</h4>
 
 </div>
 
@@ -3022,9 +3022,9 @@ library(CUBESSILclumpedmath)</code></pre>
 <h3>30339 to 33637 - ACF - AF8</h3>
 <p>User &lt;- “ACF”</p>
 <p>session &lt;-“AF8”</p>
-<p>session_date_start &lt;- 20190506</p>
+<p>session_date_start &lt;- 20190702 (included data from previous runs in data reduction bc steady ref frame)</p>
 <p>session_date_end &lt;- 20190716</p>
-<p>session_analysis_start &lt;- 30339</p>
+<p>session_analysis_start &lt;- 31489</p>
 <p>session_analysis_end &lt;- 33637</p>
 <pre class="r"><code># 
 # #pulled from May and June, name fixes from katie -&gt; May 2019
@@ -3146,6 +3146,411 @@ library(CUBESSILclumpedmath)</code></pre>
 # #384: first few cycles in d18O are outliers but fall into place with the average by the 7th cycle .... ETH2, 32862.1 to 32870.7
 # #385: same tail behavior at 384, by 6 cycles d18O comes back into line with average ... AF-NCF-TS2-16-28, 32871.1 to 32879.7
 # #393: first few cycles in d18O are outliers but fall into place with average by 7th cycle ... AF-NCF-TS2-16-10</code></pre>
+</div>
+<div id="to-24446--acf---af7_canary-islands" class="section level3">
+<h3>23838 to 24446- ACF - AF7_Canary Islands</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- AF7</p>
+<p>session_date_start &lt;- 20190214</p>
+<p>session_date_end &lt;- 20200214</p>
+<p>session_analysis_start &lt;- 23838</p>
+<p>session_analysis_end &lt;- 24446</p>
+<pre class="r"><code># Running Canary Island travertines for Dr. Ana Maria Alonso-Zarza at the Universidad Complutense de Madrid. Run session from 02/14/2019 to 02/28/2019. 
+# This data is a preliminary dataset for Dr. Alonso-Zarza. The 253 mass spectrometer is working but not producing data with the precision we would ultimately like.  This data provides an intial look at the stable ad clumped isotope values and temperatures, and will be compared with later data replicates that will be produced once remaining machine issues are resolved. 
+# 
+# Samples | Weight (mg) | %CaCo (XRD)
+# --------|-------------|------------
+# AZ-16   | 122         | 95
+# AZU6-1  | 26          | 94
+# AZ-13A  | 328         | 95
+# PRE-6   | 25          | 100
+# PRE-9   | 37          | 100
+# HOR-1   | 69          | 100
+# HOR-6   | 137         | 100
+# 
+# #renaming 
+# flatlist.Cyc[ flatlist.Cyc$&#39;Identifier 1&#39; == &quot;ACF$HOR-16&quot; , &quot;Identifier 1&quot;] &lt;- &quot;ACF$HOR-6&quot;
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 24312 &amp; flatlist.Cyc$Analysis &lt; 24321, &quot;Identifier 1&quot;] &lt;- &quot;all$eSSB_1000&quot; #mislabeled as eSSB2_25
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 23849 &amp; flatlist.Cyc$Analysis &lt; 23858, &quot;Identifier 1&quot;] &lt;- &quot;all$eSSB_25&quot; #removing &quot;2&quot; from name to match other gases
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 23867 &amp; flatlist.Cyc$Analysis &lt; 23876, &quot;Identifier 1&quot;] &lt;- &quot;all$eSSB_25&quot;  #removing &quot;2&quot; from name to match other gases
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 24366 &amp; flatlist.Cyc$Analysis &lt; 24375, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AZU6-1&quot;  #AZU6-1 mislabeled as ETH1 (AZU6-1 ran first)
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 24375 &amp; flatlist.Cyc$Analysis &lt; 24384, &quot;Identifier 1&quot;] &lt;- &quot;all$ETH1&quot;  #ETH1 mislabeled as AZU6-1 (ETH1 ran second)
+# 
+# flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
+#   mutate(Donotuse = ifelse(Analysis &gt; 24164 &amp; Analysis &lt; 24176, TRUE, FALSE))
+# 
+# #water trap was warm for full day on 02/18/2019. below labelling notes this error
+# flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
+#   mutate(runinfo = ifelse(Analysis &gt; 24146 &amp; Analysis &lt; 24156, &quot;ran warm water trap, use replicate thoughtfully&quot;, 
+#                           ifelse(Analysis &gt; 24155 &amp; Analysis &lt; 24165, &quot;ran warm water trap, use replicate thoughtfully&quot;, 
+#                                  ifelse(Analysis &gt; 24164 &amp; Analysis &lt; 24176, &quot;Do not use. 11 acq, and large d18O std dev. ran warm water trap, use replicate thoughtfully&quot;,
+#                                          ifelse(Analysis &gt; 24175 &amp; Analysis &lt; 24185, &quot;ran warm water trap, use replicate thoughtfully&quot;, 
+#                                                 ifelse(Analysis &gt; 24184 &amp; Analysis &lt; 24194, &quot;ran warm water trap, use replicate thoughtfully&quot;, 
+#                                                        ifelse(Analysis &gt; 24201 &amp; Analysis &lt; 24212, &quot;ran warm water trap, use replicate thoughtfully&quot;,
+#                                                                ifelse(Analysis &gt; 24211 &amp; Analysis &lt; 24221, &quot;ran warm water trap, use replicate thoughtfully&quot;,
+#                                                                                                                                                    &quot;&quot;))))))))
+# #####Subsetting to get data from 02/18 02/21/2019}
+# #whole day ran with a warm water trap (02/18), so I ran the same suite of samples on 02/19 with a cold water trap
+# #need to compare the data and see if 02/18 data are usable replicates, so copying plots from above
+# 
+# flatlist.Cyc_0218to0221 &lt;- flatlist.Cyc %&gt;% filter(Analysis &gt; 24147 &amp; Analysis &lt; 24446 ) 
+# 
+# combined_data_acquisition_0218to0221 &lt;- combined_data_acquisition %&gt;% filter(Analysis &gt; 24147 &amp; Analysis &lt; 24446 )
+# 
+# 
+# Samples | Weight (mg) | %CaCo (XRD) | Replicates|        | Notes
+# --------|-------------|-------------|-----------|--------|------------------------------------------------
+#         |             |             |           | Attempted | Usable    
+# AZ-16   | 122         | 95          | 2         | 2      | all clean on both 1000C and 25C D48excess
+# AZU6-1  | 26          | 94          | 3         | 2      |all with 1000C D48excess but not 25C D48excess
+# AZ-13A  | 328         | 95          | 2         | 2      | all clean on both 1000C and 25C D48excess
+# PRE-6   | 25          | 100         | 3         | 2      |1 with both D48excess, 1 with 1000C but not 25C
+# PRE-9   | 37          | 100         | 3         | 3      |all clean on both 1000C and 25C D48excess
+# HOR-1   | 69          | 100         | 2         | 0      | all with both 1000C and 25C excess
+# HOR-6   | 137         | 100         | 2         | 2      | all clean on both 1000C and 25C D48excess</code></pre>
+</div>
+<div id="to-15734---acf---af6" class="section level3">
+<h3>15027 to 15734 - ACF - AF6</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- AF6</p>
+<p>session_date_start &lt;- 20180618</p>
+<p>session_date_end &lt;- 20180627</p>
+<p>session_analysis_start &lt;- 15027</p>
+<p>session_analysis_end &lt;- 15734</p>
+<pre class="r"><code>#&quot;Raw Data Processing to CIDS - LIDIvTrad and Knc samples  &quot;
+# 
+# for (ID in c(15605:15613)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$eIB2_1000&quot;
+# }
+# for (ID in c(15643:15651)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$eIB2_1000&quot;
+# }
+# 
+# ##Need to go back and rename adam&#39;s Carraras to correct Carrara.CIT
+# for (ID in c(15027:15035)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# 
+# for (ID in c(15063:15071)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# 
+# for (ID in c(15265:15273)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# 
+# for (ID in c(15072:15080)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_3&quot;
+# }
+# 
+# for (ID in c(15045:15053)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_3&quot;
+# }
+# 
+# for (ID in c(15184:15192)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$eIB2_1000&quot;
+# }</code></pre>
+</div>
+<div id="to-14859---acf---canary-islands_1" class="section level3">
+<h3>14432 to 14859 - ACF - Canary Islands_1</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- Canary Islands_1</p>
+<p>session_date_start &lt;- 20180522</p>
+<p>session_date_end &lt;- 20180527</p>
+<p>session_analysis_start &lt;- 14432</p>
+<p>session_analysis_end &lt;- 14859</p>
+<pre class="r"><code># for (ID in c(12997:13005)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot;
+# }
+# for (ID in c(13006:13014)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$Merck&quot;
+# }
+# for (ID in c(13015:13023)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$CIT Carrara&quot;
+# } 
+# for (ID in c(13024:13032)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_3&quot;
+# }
+# for (ID in c(13691:13699)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$e1B2_25&quot;
+# }
+# for (ID in c(13358:13366)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$d1B2_1000&quot;
+# }
+# for (ID in c(12626:12634)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# for (ID in c(13344:13352)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# for (ID in c(13973:13981)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_2&quot;
+# }
+# 
+# ##Renaming idenitifer1&#39;s from 5/24/2018, didn&#39;t advance carousel to proper hole, so all data is offset with label by one
+# 
+# #CIT Carrara data mislabeled in isodat as TV04
+# for (ID in c(14565:14573)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# 
+# #TV04 data mislabeled in isodat as AZ-16A
+# for (ID in c(14574:14582)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot;
+# }
+# 
+# #AZ-16A data mislabeled in isodat as AZ-13A
+# for (ID in c(14583:14591)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AZ-16A&quot;
+# }
+# 
+# # AZ-13A data mislabeled in isodat as POZ-11
+# for (ID in c(14592:14600)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AZ-13A&quot;
+# }
+# 
+# #POZ-11 data mislabeled in isodat as AZU6-1
+# for (ID in c(14601:14609)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;ACF$POZ-11&quot;
+# }
+# 
+# #AZU6-1 not run</code></pre>
+</div>
+<div id="to-14017--acf---ltd_1" class="section level3">
+<h3>12626 to 14017- ACF - LTD_1</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- LTD_1</p>
+<p>session_date_start &lt;- 20180410</p>
+<p>session_date_end &lt;- 20200502</p>
+<p>session_analysis_start &lt;- 12626</p>
+<p>session_analysis_end &lt;- 14017</p>
+<pre class="r"><code># for (ID in c(12997:13005)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot;
+# }
+# for (ID in c(13006:13014)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$Merck&quot;
+# }
+# for (ID in c(13015:13023)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$CIT Carrara&quot;
+# } 
+# for (ID in c(13024:13032)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_3&quot;
+# }
+# for (ID in c(13691:13699)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$e1B2_25&quot;
+# }
+# for (ID in c(13358:13366)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$d1B2_1000&quot;
+# }
+# for (ID in c(12626:12634)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# for (ID in c(13344:13352)){
+#   rawdata[ rawdata$Analysis == ID , &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
+# }
+# for (ID in c(13973:13981)){
+#   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_2&quot;
+# }  
+#   
+#   rawdata_filtered &lt;- subset(rawdata, v44.mV &gt;10000)
+#   rawdata_filtered &lt;- subset(rawdata_filtered, Analysis &lt; 17462 | Analysis &gt;17469)
+#   #getting rid of the eBB_1000 from 9/15/2018
+#   rawdata2&lt;- subset(rawdata_filtered, as.numeric(Analysis) &lt; 17534  | as.numeric(Analysis) &gt; 17542)
+#   
+#   flatlist.Cyc &lt;- clumpedbyCycfixref(rawdata2)
+#   combined_data_acquisition &lt;- clumpedCyctoAcquisition(flatlist.Cyc)
+#   combined_data_group &lt;- clumpedAcquisitiontoRun(combined_data_acquisition)</code></pre>
+</div>
+<div id="to-6157---acf---af5" class="section level3">
+<h3>5059 to 6157 - ACF - AF5</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- AF5</p>
+<p>session_date_start &lt;- 20170705</p>
+<p>session_date_end &lt;- 20170724</p>
+<p>session_analysis_start &lt;- 5059</p>
+<p>session_analysis_end &lt;- 6157</p>
+<pre class="r"><code> # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5061 &amp; flatlist.Cyc$Analysis &lt; 5069.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 1
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5071 &amp; flatlist.Cyc$Analysis &lt; 5079.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 2
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5080 &amp; flatlist.Cyc$Analysis &lt; 5098.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 3 
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5089 &amp; flatlist.Cyc$Analysis &lt; 5097.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 4
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5098 &amp; flatlist.Cyc$Analysis &lt; 5106.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 5
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5170 &amp; flatlist.Cyc$Analysis &lt; 5178.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 6
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5179 &amp; flatlist.Cyc$Analysis &lt; 5187.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 7
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5233 &amp; flatlist.Cyc$Analysis &lt; 5241.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 8
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5242 &amp; flatlist.Cyc$Analysis &lt; 5250.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 9
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5251 &amp; flatlist.Cyc$Analysis &lt; 5259.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 10
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5287 &amp; flatlist.Cyc$Analysis &lt; 5295.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 11
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5296 &amp; flatlist.Cyc$Analysis &lt; 5304.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 12
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5341 &amp; flatlist.Cyc$Analysis &lt; 5349.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 13
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5350 &amp; flatlist.Cyc$Analysis &lt; 5358.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 14
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5359 &amp; flatlist.Cyc$Analysis &lt; 5367.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 15
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5386 &amp; flatlist.Cyc$Analysis &lt; 5394.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 16
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5406 &amp; flatlist.Cyc$Analysis &lt; 5412.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 17. not enough cycles
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5441 &amp; flatlist.Cyc$Analysis &lt; 5449.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 18
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5450 &amp; flatlist.Cyc$Analysis &lt; 5456.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 19
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5513 &amp; flatlist.Cyc$Analysis &lt; 5521.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 20
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5558 &amp; flatlist.Cyc$Analysis &lt; 5566.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 21
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5567 &amp; flatlist.Cyc$Analysis &lt; 5575.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NIST 88B&quot; #batch 22
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5577 &amp; flatlist.Cyc$Analysis &lt; 5585.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 23
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5595 &amp; flatlist.Cyc$Analysis &lt; 5603.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-10&quot; #batch 24
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5604 &amp; flatlist.Cyc$Analysis &lt; 5612.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-12&quot; #batch 25
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5613 &amp; flatlist.Cyc$Analysis &lt; 5621.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 26
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5622 &amp; flatlist.Cyc$Analysis &lt; 5630.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-14&quot; #batch 27
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5632 &amp; flatlist.Cyc$Analysis &lt; 5640.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 28
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5641 &amp; flatlist.Cyc$Analysis &lt; 5649.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-25&quot; #batch 29
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5650 &amp; flatlist.Cyc$Analysis &lt; 5658.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 30
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5695 &amp; flatlist.Cyc$Analysis &lt; 5703.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 31
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5715 &amp; flatlist.Cyc$Analysis &lt; 5723.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 32
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5724 &amp; flatlist.Cyc$Analysis &lt; 5732.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-14&quot; #batch 33
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5733 &amp; flatlist.Cyc$Analysis &lt; 5741.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-25&quot; #batch 34
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5742 &amp; flatlist.Cyc$Analysis &lt; 5750.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 35
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5751 &amp; flatlist.Cyc$Analysis &lt; 5759.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 36
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5760 &amp; flatlist.Cyc$Analysis &lt; 5768.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-26&quot; #batch 37
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5769 &amp; flatlist.Cyc$Analysis &lt; 5777.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-01&quot; #batch 38
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5778 &amp; flatlist.Cyc$Analysis &lt; 5786.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 39
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5787 &amp; flatlist.Cyc$Analysis &lt; 5795.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-17&quot; #batch 40
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5796 &amp; flatlist.Cyc$Analysis &lt; 5804.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-15&quot; #batch 41
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5805 &amp; flatlist.Cyc$Analysis &lt; 5813.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 42
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5814 &amp; flatlist.Cyc$Analysis &lt; 5822.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 43
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5823 &amp; flatlist.Cyc$Analysis &lt; 5831.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 44
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5832 &amp; flatlist.Cyc$Analysis &lt; 5840.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-26&quot; #batch 45
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5841 &amp; flatlist.Cyc$Analysis &lt; 5849.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-01&quot; #batch 46
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5850 &amp; flatlist.Cyc$Analysis &lt; 5858.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 47
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5859 &amp; flatlist.Cyc$Analysis &lt; 5867.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-17&quot; #batch 48
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5868 &amp; flatlist.Cyc$Analysis &lt; 5876.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-10&quot; #batch 49
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5877 &amp; flatlist.Cyc$Analysis &lt; 5885.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU YULE&quot; #batch 50
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5886 &amp; flatlist.Cyc$Analysis &lt; 5887.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Sarah CO2 tank&quot; #batch 51
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5888 &amp; flatlist.Cyc$Analysis &lt; 5896.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 52
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5897 &amp; flatlist.Cyc$Analysis &lt; 5905.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-12&quot; #batch 53
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5906 &amp; flatlist.Cyc$Analysis &lt; 5914.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-14&quot; #batch 54
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5915 &amp; flatlist.Cyc$Analysis &lt; 5923.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-25&quot; #batch 55
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5924 &amp; flatlist.Cyc$Analysis &lt; 5932.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 56
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5951 &amp; flatlist.Cyc$Analysis &lt; 5959.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 57
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5960 &amp; flatlist.Cyc$Analysis &lt; 5968.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 58
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5969 &amp; flatlist.Cyc$Analysis &lt; 5977.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 59
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 5987 &amp; flatlist.Cyc$Analysis &lt; 5994.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 60
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 6086 &amp; flatlist.Cyc$Analysis &lt; 6094.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 61
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 6104 &amp; flatlist.Cyc$Analysis &lt; 6112.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 62
+ # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 6149 &amp; flatlist.Cyc$Analysis &lt; 6157.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 63
+ # 
+ # flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
+ #    change.donotuse.and.runinfo(5886.1, 5887.8,TRUE,&quot;not enough cycles&quot;) %&gt;%  #Sarah CO2 tank
+ #    change.donotuse.and.runinfo(5613.1, 5621.8, TRUE, &quot;completely offset from rest of TV04&quot;) #TV04 </code></pre>
+</div>
+<div id="to-4538---acf---af4" class="section level3">
+<h3>3524 to 4538 - ACF - AF4</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- AF4</p>
+<p>session_date_start &lt;- 20170421</p>
+<p>session_date_end &lt;- 20170507</p>
+<p>session_analysis_start &lt;- 3524</p>
+<p>session_analysis_end &lt;- 4538</p>
+<pre class="r"><code># 
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3524 &amp; flatlist.Cyc$Analysis &lt; 3532.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 1
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3533 &amp; flatlist.Cyc$Analysis &lt; 3541.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 2
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3542 &amp; flatlist.Cyc$Analysis &lt; 3550.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 3
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3551 &amp; flatlist.Cyc$Analysis &lt; 3559.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CIT HIS&quot; #batch 4
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3560 &amp; flatlist.Cyc$Analysis &lt; 3568.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU YULE&quot; #batch 5
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3569 &amp; flatlist.Cyc$Analysis &lt; 3577.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 6
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3578 &amp; flatlist.Cyc$Analysis &lt; 3586.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 7
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3587 &amp; flatlist.Cyc$Analysis &lt; 3595.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 8
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3596 &amp; flatlist.Cyc$Analysis &lt; 3604.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 9
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3605 &amp; flatlist.Cyc$Analysis &lt; 3613.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 10
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3616 &amp; flatlist.Cyc$Analysis &lt; 3624.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eBBHG&quot; #batch 11
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3625 &amp; flatlist.Cyc$Analysis &lt; 3633.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-03&quot; #batch 14
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3634 &amp; flatlist.Cyc$Analysis &lt; 3642.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-12&quot; #batch 15
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3643 &amp; flatlist.Cyc$Analysis &lt; 3653.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 16
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3654 &amp; flatlist.Cyc$Analysis &lt; 3673.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 17. too many cycles!
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3674 &amp; flatlist.Cyc$Analysis &lt; 3682.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 18
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3737 &amp; flatlist.Cyc$Analysis &lt; 3747.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 19
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3748 &amp; flatlist.Cyc$Analysis &lt; 3748.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 20
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3749 &amp; flatlist.Cyc$Analysis &lt; 3749.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 21
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3750 &amp; flatlist.Cyc$Analysis &lt; 3759.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 22
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3790 &amp; flatlist.Cyc$Analysis &lt; 3798.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 23
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3866 &amp; flatlist.Cyc$Analysis &lt; 3874.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 24
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3875 &amp; flatlist.Cyc$Analysis &lt; 3883.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 25
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3884 &amp; flatlist.Cyc$Analysis &lt; 3893.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 26
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3939 &amp; flatlist.Cyc$Analysis &lt; 3947.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 27
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 3958 &amp; flatlist.Cyc$Analysis &lt; 3966.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 28
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4021 &amp; flatlist.Cyc$Analysis &lt; 4029.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 29
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4039 &amp; flatlist.Cyc$Analysis &lt; 4047.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 30
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4048 &amp; flatlist.Cyc$Analysis &lt; 4056.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 31
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4057 &amp; flatlist.Cyc$Analysis &lt; 4065.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 32
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4066 &amp; flatlist.Cyc$Analysis &lt; 4074.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-14&quot; #batch 33
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4076 &amp; flatlist.Cyc$Analysis &lt; 4084.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSHG&quot; #batch 34
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4085 &amp; flatlist.Cyc$Analysis &lt; 4093.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 35
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4094 &amp; flatlist.Cyc$Analysis &lt; 4102.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-15&quot; #batch 36
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4103 &amp; flatlist.Cyc$Analysis &lt; 4111.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 37
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4112 &amp; flatlist.Cyc$Analysis &lt; 4120.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-17&quot; #batch 38
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4121 &amp; flatlist.Cyc$Analysis &lt; 4129.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-21&quot; #batch 39
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4130 &amp; flatlist.Cyc$Analysis &lt; 4138.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 40
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4139 &amp; flatlist.Cyc$Analysis &lt; 4147.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 41
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4148 &amp; flatlist.Cyc$Analysis &lt; 4156.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-22&quot; #batch 42
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4157 &amp; flatlist.Cyc$Analysis &lt; 4165.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-25&quot; #batch 43
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4166 &amp; flatlist.Cyc$Analysis &lt; 4174.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 44
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4175 &amp; flatlist.Cyc$Analysis &lt; 4183.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-26&quot; #batch 45
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4184 &amp; flatlist.Cyc$Analysis &lt; 4192.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-36&quot; #batch 46
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4193 &amp; flatlist.Cyc$Analysis &lt; 4201.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 47
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4203 &amp; flatlist.Cyc$Analysis &lt; 4211.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 48
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4212 &amp; flatlist.Cyc$Analysis &lt; 4220.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-35&quot; #batch 49
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4221 &amp; flatlist.Cyc$Analysis &lt; 4229.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 50
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4230 &amp; flatlist.Cyc$Analysis &lt; 4238.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-01&quot; #batch 51
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4239 &amp; flatlist.Cyc$Analysis &lt; 4247.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-02&quot; #batch 52
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4248 &amp; flatlist.Cyc$Analysis &lt; 4256.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 53
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4257 &amp; flatlist.Cyc$Analysis &lt; 4265.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-03&quot; #batch 54
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4266 &amp; flatlist.Cyc$Analysis &lt; 4274.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-10&quot; #batch 55
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4275 &amp; flatlist.Cyc$Analysis &lt; 4283.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 56
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4284 &amp; flatlist.Cyc$Analysis &lt; 4292.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 57
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4293 &amp; flatlist.Cyc$Analysis &lt; 4301.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-12&quot; #batch 58
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4302 &amp; flatlist.Cyc$Analysis &lt; 4310.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-15&quot; #batch 59
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4311 &amp; flatlist.Cyc$Analysis &lt; 4319.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 60
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4320 &amp; flatlist.Cyc$Analysis &lt; 4328.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-03&quot; #batch 61
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4329 &amp; flatlist.Cyc$Analysis &lt; 4337.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-17&quot; #batch 62
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4338 &amp; flatlist.Cyc$Analysis &lt; 4346.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-19&quot; #batch 63
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4337 &amp; flatlist.Cyc$Analysis &lt; 4356.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 64
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4357 &amp; flatlist.Cyc$Analysis &lt; 4365.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBEG&quot; #batch 65
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4366 &amp; flatlist.Cyc$Analysis &lt; 4374.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 66
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4375 &amp; flatlist.Cyc$Analysis &lt; 4384.8, &quot;Identifier 1&quot;] &lt;- &quot;all$TV04&quot; #batch 67
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4385 &amp; flatlist.Cyc$Analysis &lt; 4393.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 68
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4394 &amp; flatlist.Cyc$Analysis &lt; 4402.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 69
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4403 &amp; flatlist.Cyc$Analysis &lt; 4411.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-19&quot; #batch 70
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4412 &amp; flatlist.Cyc$Analysis &lt; 4420.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-15&quot; #batch 71
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4421 &amp; flatlist.Cyc$Analysis &lt; 4429.8, &quot;Identifier 1&quot;] &lt;- &quot;all$dBBHG&quot; #batch 72
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4430 &amp; flatlist.Cyc$Analysis &lt; 4438.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU TS&quot; #batch 73
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4439 &amp; flatlist.Cyc$Analysis &lt; 4447.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-12&quot; #batch 74
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4448 &amp; flatlist.Cyc$Analysis &lt; 4456.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-10&quot; #batch 75
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4457 &amp; flatlist.Cyc$Analysis &lt; 4465.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS18&quot; #batch 76
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4466 &amp; flatlist.Cyc$Analysis &lt; 4474.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS3-16-02&quot; #batch 77
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4475 &amp; flatlist.Cyc$Analysis &lt; 4475.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 78
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4476 &amp; flatlist.Cyc$Analysis &lt; 4484.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-36&quot; #batch 79
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4485 &amp; flatlist.Cyc$Analysis &lt; 4493.8, &quot;Identifier 1&quot;] &lt;- &quot;all$eYSEG&quot; #batch 80
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4494 &amp; flatlist.Cyc$Analysis &lt; 4502.8, &quot;Identifier 1&quot;] &lt;- &quot;all$NBS19&quot; #batch 81
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4503 &amp; flatlist.Cyc$Analysis &lt; 4511.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-17&quot; #batch 82
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4512 &amp; flatlist.Cyc$Analysis &lt; 4520.8, &quot;Identifier 1&quot;] &lt;- &quot;ACF$AF-NCF-TS2-16-02&quot; #batch 83
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4521 &amp; flatlist.Cyc$Analysis &lt; 4529.8, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot; #batch 84
+#  flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 4530 &amp; flatlist.Cyc$Analysis &lt; 4538.8, &quot;Identifier 1&quot;] &lt;- &quot;all$CU YULE&quot; #batch 85
+#  
+# flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
+#     change.donotuse.and.runinfo(4214, 4220.8,TRUE,&quot;not enough cycles&quot;) %&gt;%  #AF-NCF-TS2-16-35 batch45
+#     change.donotuse.and.runinfo(4386, 4393.8, TRUE, &quot;not enough cycles&quot;) %&gt;% #CU TS batch62
+#     change.donotuse.and.runinfo(4067, 4074.8, TRUE, &quot;not enough gas&quot;) %&gt;% #AF-NCF-TS2-16-14 batch 28
+#     change.donotuse.and.runinfo(4343, 4346.8, TRUE, &quot;not enough gas&quot;) %&gt;% #Carrara.CIT batch58
+#     change.donotuse.and.runinfo(3750, 3759.8, TRUE, &quot;offset from the rest of population&quot;) %&gt;% #eYS batch17
+#     change.donotuse.and.runinfo(4338, 4346.8, TRUE, &quot;offset from the rest of population&quot;) %&gt;% #Carrara.CIT batch58
+#     change.donotuse.and.runinfo(3738, 3747.8, TRUE, &quot;offset from the rest of population&quot;) #Carrara.CIT batch 16</code></pre>
+</div>
+<div id="to-3333---acf---af3" class="section level3">
+<h3>2644 to 3333 - ACF - AF3</h3>
+<p>User &lt;- ACF</p>
+<p>session &lt;- AF3</p>
+<p>session_date_start &lt;- 20170225</p>
+<p>session_date_end &lt;- 20170317</p>
+<p>session_analysis_start &lt;- 2644</p>
+<p>session_analysis_end &lt;- 3333</p>
+<pre class="r"><code>#note from ACF 20200928 - searched and cannot find data correction/processing content for AF3, except for this note: &quot;Ran throughout 02/25/2017 to 03/17/2017. Took a few standards from May to complete the reference frame (have enought TV04 to correct using Katie&#39;s code). I&#39;m dubious about trusting replicates from this session b/c of the weak reference frame. </code></pre>
+<div id="note-that-af1-af2-dont-really-exist-bc-they-were-session-where-i-was-learning-data-production-and-i-dont-have-data-processing-record-of-those-times-but-i-started-my-session-numbering-system-at-af3-idk-early-grad-school-decisions.-also-i-didnt-start-to-consistently-use-af-format-until-af6-so-there-are-mismatched-session-labels." class="section level6">
+<h6>note that AF1-AF2 don’t really exist bc they were session where I was learning data production and I don’t have data processing record of those times, but I started my session numbering system at AF3 (idk, early grad school decisions…). Also I didn’t start to consistently use AF# format until AF6, so there are mismatched session labels.</h6>
+</div>
 </div>
 </div>
 
