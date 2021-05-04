@@ -2853,7 +2853,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">253 Data Processing Long Term Record</h1>
 <h4 class="author">Last edit by: ACF | Created by: ACF</h4>
-<h4 class="date">Last Knitted 28 Sep 2020</h4>
+<h4 class="date">Last Knitted 04 May 2021</h4>
 
 </div>
 
@@ -2889,8 +2889,127 @@ library(CUBESSILclumpedmath)</code></pre>
 <p>session_analysis_end &lt;- #####</p>
 <pre class="r"><code>#change the code chunk name to include &quot;Analysis # Range&quot; - &quot;User&quot; - &quot;Session Name&quot;
 #use R chunk to compile all data processing changes you made throughout your 253 session 
-#comment out whole chunk by highlighting all text in chunk and use crl+shift+c . if you leave it uncommented, this Rmarkdown won&#39;t knit </code></pre>
+#comment out whole chunk by highlighting all text in chunk and use crl+shift+c . if you leave it uncommented, this Rmarkdown won't knit </code></pre>
 <p><strong><em>TEMPLATE END</em></strong></p>
+</div>
+<div id="to-52232---acf---af11" class="section level3">
+<h3>48525 to 52232 - ACF - AF11</h3>
+<p>User &lt;- “ACF, BJDK”</p>
+<p>session &lt;-“AF11” – name you gave your session</p>
+<p>session_date_start &lt;- 20210302</p>
+<p>session_date_end &lt;- 20210429</p>
+<p>session_analysis_start &lt;- 48525</p>
+<p>session_analysis_end &lt;- 52232</p>
+<pre class="r"><code># # put these 3 lines under the &quot;clumped math&quot; chunk in p1 code, need to edit the prep and ID 2 before trying to batch, otherwise batching plot won't work
+# rawdata[  rawdata$Analysis &gt; 49135 &amp; rawdata$Analysis &lt; 49140.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$zero&quot; #20210312, c/p error for naming of zero, adding user
+# rawdata[  rawdata$Analysis &gt; 49135 &amp; rawdata$Analysis &lt; 49140.99, &quot;Identifier 2&quot;] &lt;- &quot;0&quot; #20210312, c/p error for naming of zero, adding user
+# rawdata[  rawdata$Analysis &gt; 49135 &amp; rawdata$Analysis &lt; 49140.99, &quot;Preparation&quot;] &lt;- &quot;z&quot; #20210312, c/p error for naming of zero, adding Preparation 
+# 
+# #TEMPLATE for AF11 session
+# #flatlist.Cyc &lt;- flatlist.Cyc %&gt;% change.donotuse.and.runinfo(#####, #####.99, TRUE, &quot;COMMMENT&quot;) #DATE #FURTHER NOTES
+# 
+# # Notes from this run
+# #   Heated gases hadn't been fired since 09/2020, I ran one dR and eSSB before I remembered to refire them, for 4 hours at 1000C in furnace. refired dR_1000 on 03/09/2020 and refired eSSB_1000 on 03/10/2021
+# #   --- interesting experiment to show how heated gases reequilibrate to room temperature over time.
+# #   
+# 
+# #marking &quot;Donotuse&quot; or adding comment
+# flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
+# #HG - old fire
+#   change.donotuse.and.runinfo(48645, 48654.99, TRUE, &quot;Hadn't been fired since 09/20 (~6 months before). D47 much lower than expected&quot;) %&gt;% #20210305, dR_1000, D47 much lower than expected. HG not fired since September 2020
+#   change.donotuse.and.runinfo(48655, 48664.99, FALSE, &quot;Hadn't been fired since 09/20 (~6 months before). D47 much lower than expected&quot;) %&gt;% #20210305, eSSB_1000, HG not fired since September 2020
+#   change.donotuse.and.runinfo(48700, 48709.99, FALSE, &quot;Potentially contaminated std vial? Doesn't have high 48, but from same suspect vial&quot;) %&gt;% #ETH1, Doesn't have high 48, but from same suspect vial
+#   
+# ## ETH1 high 48 - first  
+#   change.donotuse.and.runinfo(48760, 48769.99, TRUE, &quot;High d48background, d48sd, D48 excess. Contaminated std vial?&quot;) %&gt;% #20210307, ETH1, high d48background, d48sd, D48 excess. Contaminated std vial?
+#   change.donotuse.and.runinfo(48770, 48779.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess&quot;) %&gt;% #20200307, ETH3, d48 background high but decreasing
+# #HG - old fire
+#   change.donotuse.and.runinfo(48780, 48789.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Hadn't been fired since 09/20 (~6 months before).&quot;) %&gt;% #20200307, dR_1000, d48 background high but decreasing. HG not fired since September 2020
+#   change.donotuse.and.runinfo(48790, 48799.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Contaminated std vial?&quot;) %&gt;% #20200307, ETH1 d48 background high but decreasing. Contaminated std vial?
+#   change.donotuse.and.runinfo(48800, 48809.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Stir stick maybe thrown?&quot;) %&gt;% #20200307, ETH2, d48 background high but decreasing
+#   change.donotuse.and.runinfo(48810, 48819.99, FALSE, &quot;1st sample that 48bkgrd looks back to normal after high d48 from ETH1. Stir stick maybe thrown?&quot;) %&gt;% #20210308, ETH2, stir stick maybe thrown?
+#   change.donotuse.and.runinfo(48820, 48829.99, FALSE, &quot;48bkgrd looks back to normal after high d48 from ETH1. Stir stick thrown&quot;) %&gt;% #20210308, ETH3, stir stick maybe thrown
+# 
+# ## ETH1 high 48 - second  
+#   change.donotuse.and.runinfo(48830, 48839.99, TRUE, &quot;High d48background, d48sd, D48 excess. stir stick thrown. Contaminated std vial?&quot;) %&gt;% #20210308, ETH1, high d48background, d48sd, D48 excess. Stir stick maybe thrown. Contaminated std vial?
+# #HG - old fire
+#   change.donotuse.and.runinfo(48840, 48849.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Hadn't been fired since 09/20 (~6 months before).&quot;) %&gt;% #202103, eSSB_1000
+#   change.donotuse.and.runinfo(48850, 48859.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess.&quot;) %&gt;% #20210308, dR_25, double shot
+#   change.donotuse.and.runinfo(48860, 48869.99, TRUE, &quot;Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess.&quot;) %&gt;% #20210308, CU YULE
+#   change.donotuse.and.runinfo(48870, 48879.99, TRUE, &quot;no gas, carousel error?&quot;) %&gt;% #20210308, ETH1, no gas...? potential carousel error, makes sense bc next sample doesn't match ETH2 values 
+#   change.donotuse.and.runinfo(48880, 48889.99, TRUE, &quot;carousel error? no gas for sample before, and this one does not match ETH2 bulk values or D47&quot;) %&gt;% #20210308, labeled as ETH2, but doesnt match population.... mystery?! also HUGE yield... combination of the powder before? but no stir stick issue...
+#   change.donotuse.and.runinfo(48890, 48899.99, FALSE, &quot;1st sample that 48bkgrd looks back to normal after high d48 from ETH1.&quot;) %&gt;% #20210308, AF-NCF-TS2-17-21.5C, 48 background back to low levels
+#   
+#   change.donotuse.and.runinfo(48980, 48989.99, FALSE, &quot;Potentially contaminated std vial? Doesn't have high 48, but from same suspect vial&quot;) %&gt;% #ETH1
+#   change.donotuse.and.runinfo(49010, 49019.99, TRUE, &quot;high std residual. Contaminated std vial?&quot;) %&gt;% #20210310, ETH1
+#   change.donotuse.and.runinfo(49030, 49039.99, TRUE, &quot;high std residual&quot;) %&gt;%  #20210310, ETH3
+#   change.donotuse.and.runinfo(49080, 49089.99, FALSE, &quot;Potentially contaminated std vial? Doesn't have high 48, but from same suspect vial&quot;) %&gt;% #ETH1
+# #HG - new fire
+#   change.donotuse.and.runinfo(49131, 49134.99, TRUE, &quot;accidently pumped 1/2 of dR away. fired 03/09/2021&quot;) %&gt;% #20210312, dR_1000, sequence user error, pumped away, newly fired
+# #HG - new fire
+#   change.donotuse.and.runinfo(49141, 49150.99, FALSE, &quot;fired 03/10/2021&quot;) %&gt;%  #20210312, eSSB_1000, fired by ACF on 03/10/2021, compare to previous HG that were fired in 09/20
+#   change.donotuse.and.runinfo(49151, 49160.99, FALSE, &quot;Stir stick maybe thrown?&quot;) %&gt;%  #20210312, ETH2, 8.22mg
+#   change.donotuse.and.runinfo(49161, 49170.99, FALSE, &quot;Stir stick maybe thrown? watch for yield issue&quot;) %&gt;% #20210312, AF-NCF-TS-323-A.dark ... run another replicate in case of yield issue
+#   change.donotuse.and.runinfo(49171, 49180.99, FALSE, &quot;Stir stick maybe thrown? watch for yield issue&quot;) %&gt;% #20210313, ETH3, 8.59mg
+# ## NEW STANDARD VIAL OF ETH1 opened on 03/12/2021 -- Analysis 49201
+#   change.donotuse.and.runinfo(49201, 49210.99, FALSE, &quot;first replicate of new ETH1 standard vial opened by ACF on 03/12/2021&quot;) %&gt;%#20210313, ETH1
+# #did something get contaminated or messed up? 
+#   change.donotuse.and.runinfo(49426, 49435.99, TRUE, &quot;high std deviation&quot;) %&gt;%#20210316 ETH3
+#   change.donotuse.and.runinfo(49446, 49455.99, TRUE, &quot;rep different than the rest in D47 and bulk isos&quot;) %&gt;% #20210316, ETH2 cull 
+#   change.donotuse.and.runinfo(49456, 49465.99, TRUE, &quot;rep different than the rest in D47 and bulk isos&quot;) %&gt;% #20210316, ETH1 cull 
+#   change.donotuse.and.runinfo(49506, 49515.99, TRUE, &quot;rep different than the rest in D47 and bulk isos&quot;) %&gt;% #20210317, ETH4
+#   change.donotuse.and.runinfo(49516, 49525.99, TRUE, &quot;rep different than the rest in D47 and bulk isos&quot;) %&gt;% #20210317, ETH2
+#   change.donotuse.and.runinfo(49526, 49535.99, TRUE, &quot;rep different than the rest in D47 and bulk isos&quot;) %&gt;%  #20210317, TS-323-A.dark, cull later?
+#   change.donotuse.and.runinfo(49536, 49545.99, TRUE, &quot;rep different than the rest in D47 and d18O&quot;) %&gt;% #20210317, TS2-17-21.5D
+#   change.donotuse.and.runinfo(49557, 49566.99, TRUE, &quot;high std residuals&quot;) %&gt;% #20210318 ETH3
+#   change.donotuse.and.runinfo(51113, 51122.99, TRUE, &quot;rep diff in D47 and D48&quot;) %&gt;% #20210412, dR_25
+#   change.donotuse.and.runinfo(51462, 51471.99, TRUE, &quot;rep diff in D47 and D48&quot;) %&gt;% #20210417, ETH4
+#   change.donotuse.and.runinfo(51492, 51501.99, TRUE, &quot;rep diff in D47 and D48&quot;) %&gt;%  #20210417, ETH2
+#   change.donotuse.and.runinfo(51472, 51481.99, FALSE, &quot;between two high D48 std, watch&quot;) %&gt;%  #20210417 TS-323-A.light
+#   change.donotuse.and.runinfo(51482, 51491.99, FALSE, &quot;between two high D48 std, watch&quot;) %&gt;%  #20210417 TS3-16-10
+#   change.donotuse.and.runinfo(51552, 51552.99, TRUE, &quot;bad acq&quot;) %&gt;%  #20210418 TS3-16-13
+#   change.donotuse.and.runinfo(51512, 51512.99, TRUE, &quot;bad acq&quot;) %&gt;%  #20210418  TS3-16-20.gen2
+#   change.donotuse.and.runinfo(51599.8, 51599.9, TRUE, &quot;outlier cycle&quot;) %&gt;%  #ACF$Knc$AF-NCF-TS2-17-21.5A.dark
+#   change.donotuse.and.runinfo(51602.4, 51602.5, TRUE, &quot;outlier cycle&quot;) %&gt;%  #ACF$Knc$AF-NCF-TS2-17-21.5A.dark
+#   change.donotuse.and.runinfo(51630.1, 51630.2, TRUE, &quot;outlier cycle&quot;) %&gt;%  #ACF$Knc$AF-NCF-TS2-17-21.5E.light 
+#   change.donotuse.and.runinfo(49731.1, 49731.2, TRUE, &quot;outlier cycle&quot;) %&gt;%  #ACF$Knc$AF-NCF-TS3-16-10
+#   change.donotuse.and.runinfo(51559.4, 51559.5, TRUE, &quot;outlier cycle&quot;) %&gt;%  #ACF$Knc$AF-NCF-TS3-16-05
+#   change.donotuse.and.runinfo(51567.1, 51567.2, TRUE, &quot;outlier Acq&quot;) %&gt;%  #AF$Knc$AF-NCF-TS3-16-05  
+#   change.donotuse.and.runinfo(51738, 51747.99, TRUE, &quot;high std residual&quot;) %&gt;%  #20210423, ETH2
+#   change.donotuse.and.runinfo(51869, 51878.99, TRUE, &quot;high std residual&quot;) %&gt;%  #20210423, ETH2
+#   change.donotuse.and.runinfo(52029, 52038.99, FALSE, &quot;new ETH3 vial, opened by ACF 04/23/2021&quot;) %&gt;% 
+#   change.donotuse.and.runinfo(52129, 52138.99, FALSE, &quot;new ETH3 vial, opened by ACF 04/23/2021&quot;) %&gt;% 
+#   change.donotuse.and.runinfo(52199, 52208.99, FALSE, &quot;last of older ETH3 vial&quot;) #ETH3, new vial opened by ACF 04/23/2021
+# 
+# #renaming
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 48880 &amp; flatlist.Cyc$Analysis &lt; 48889.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$gasmix&quot; #20210311, labeled as ETH2, but is a mixture of gases bc of carousel error 
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 49060 &amp; flatlist.Cyc$Analysis &lt; 49069.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$ETH2&quot; #20210311, mislabeled as ETH3 in runlist, should be ETH2
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 49135 &amp; flatlist.Cyc$Analysis &lt; 49140.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$zero&quot; #20210312, c/p error for naming of zero, adding user
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 49135 &amp; flatlist.Cyc$Analysis &lt; 49140.99, &quot;Preparation&quot;] &lt;- &quot;z&quot; #20210312, c/p error for naming of zero, adding Preparation
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 49873 &amp; flatlist.Cyc$Analysis &lt; 49882.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$ETH1&quot; #carousel error caused mislabelling, ETH1 mislabled as ETH4
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 49883 &amp; flatlist.Cyc$Analysis &lt; 49892.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$ETH4&quot; #carousel error caused mislabelling, ETH4 mislabled as ETH3
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 49893 &amp; flatlist.Cyc$Analysis &lt; 49902.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$ETH3&quot; #carousel error caused mislabelling, ETH3 mislabelled as ETH2
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 51548 &amp; flatlist.Cyc$Analysis &lt; 51557.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$Knc$AF-NCF-TS3-16-13&quot; # didn't use the 13.gen2.light bottled used original TS3-16-13
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 51598 &amp; flatlist.Cyc$Analysis &lt; 51607.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$Knc$AF-NCF-TS2-17-21.5A.dark&quot; #used &quot;.&quot; instead of &quot;-&quot;
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 52089 &amp; flatlist.Cyc$Analysis &lt; 52098.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$dR_1000&quot; 
+# 
+# #Missed a dR_25 and so some data needs to be moved up one.
+# flatlist.Cyc &lt;- getmetadatafromAnalysis(flatlist.Cyc, 50141, 50150.99, 50131)
+# flatlist.Cyc &lt;- getmetadatafromAnalysis(flatlist.Cyc, 50131, 50140.99, 50121)
+# flatlist.Cyc &lt;- getmetadatafromAnalysis(flatlist.Cyc, 50121, 50130.99, 50111)
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 50111 &amp; flatlist.Cyc$Analysis &lt; 50120.99, &quot;Identifier 1&quot;] &lt;- &quot;BJDK$all$dR_25&quot;
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 50111 &amp; flatlist.Cyc$Analysis &lt; 50120.99, &quot;Identifier 2&quot;] &lt;- &quot;0&quot; 
+# 
+# # The carousel went haywire and then got stuck. Analaysis 50304 to 50343 either has no gas or did not drop.
+# flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
+#           change.donotuse.and.runinfo(50304, 50343.99, TRUE, &quot;carousel stoped working correctly&quot;) %&gt;%  
+#           change.donotuse.and.runinfo(50304, 50343.99, TRUE, &quot;carousel stoped working correctly&quot;)
+# flatlist.Cyc &lt;- getmetadatafromAnalysis(flatlist.Cyc, 50515, 50515.99, 50514)# last basic aq for ETH3 got the lable for the next ETH4
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 50515 &amp; flatlist.Cyc$Analysis &lt; 50515.99, &quot;batch&quot;] &lt;- 171 #fix the batch number so Sample.ID works correctly
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 50586 &amp; flatlist.Cyc$Analysis &lt; 50595.99, &quot;Identifier 1&quot;] &lt;- &quot;ACF$all$ETH3&quot; #the seq didn't match the paper runlist
+# flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 50586 &amp; flatlist.Cyc$Analysis &lt; 50595.99, &quot;Identifier 2&quot;] &lt;- &quot;8.89&quot;
+# #50515
+# </code></pre>
 </div>
 <div id="to-44648---acf---af10" class="section level3">
 <h3>42224 to 44648 - ACF - AF10</h3>
@@ -2911,7 +3030,7 @@ library(CUBESSILclumpedmath)</code></pre>
 # #marking &quot;Donotuse&quot; or adding comment
 # flatlist.Cyc &lt;- flatlist.Cyc %&gt;% 
 #   change.donotuse.and.runinfo(42266, 42275.99, TRUE, &quot;eSSB_25, way colder than rest of pop in D47&quot;) %&gt;% #20200803 #eSSB_25
-#   change.donotuse.and.runinfo(42306, 42315.99, TRUE, &quot;unchecked pressure balance for some acquisitions&quot;) %&gt;% #20200803 #ETH3, accidently left pressure balance button unchecked for a few acqusitions, and poor yield, didn&#39;t fully digest in acid
+#   change.donotuse.and.runinfo(42306, 42315.99, TRUE, &quot;unchecked pressure balance for some acquisitions&quot;) %&gt;% #20200803 #ETH3, accidently left pressure balance button unchecked for a few acqusitions, and poor yield, didn't fully digest in acid
 #   change.donotuse.and.runinfo(42326, 42326.99, TRUE, &quot;1 acq, trial gas&quot;) %&gt;% #20200804 #SH$SHgasAug
 #   change.donotuse.and.runinfo(42347, 42356.99, TRUE, &quot;mixed isotope values?&quot;) %&gt;% #20200804 #IAEA-C2 looks like eSSB instead of C2 values in 18O and 13C
 #   change.donotuse.and.runinfo(42357, 42366.99, TRUE, &quot;stir stick thrown&quot;) %&gt;% #20200804 #ETH1, computer communication error
@@ -2971,7 +3090,7 @@ library(CUBESSILclumpedmath)</code></pre>
 #   change.donotuse.and.runinfo(39362, 39371.99, TRUE, &quot;no peak center, background, pressure balance&quot;) %&gt;% #was labeled ETH1 (9.9) in sequence, needs to be labeled ETH1 (12.0mg)
 #   change.donotuse.and.runinfo(39372, 39381.99, TRUE, &quot;no peak center, background, pressure balance&quot;) %&gt;% #was labeled ETH3 (10.2) in sequence, needs to be labeled ETH1 (9.9mg)
 #   change.donotuse.and.runinfo(39523, 39546.99, TRUE, &quot;possible thrown stir stick &quot;) %&gt;%  #zeros ran at 17000mV. adjusted the delay on the refill method from 50s to 40s and that seemed to get the zeros to run around 16000mV
-# #stir stick found not spinning Monday AM 06/15/2020. not sure when between Friday at 12pm and Monday 8:00am it stopped, marking the standards that ran over the weekend as &#39;possible thrown stir stick &#39; to flag but not throw out yet.
+# #stir stick found not spinning Monday AM 06/15/2020. not sure when between Friday at 12pm and Monday 8:00am it stopped, marking the standards that ran over the weekend as 'possible thrown stir stick ' to flag but not throw out yet.
 #   change.donotuse.and.runinfo(39393, 39402.99, FALSE, &quot;possible thrown stir stick &quot;) %&gt;%  #all$ETH3, 10.2mg
 #   change.donotuse.and.runinfo(39403, 39412.99, FALSE, &quot;possible thrown stir stick &quot;) %&gt;%  #all$CU YULE    9.4
 #   change.donotuse.and.runinfo(39413, 39422.99, FALSE, &quot;possible thrown stir stick &quot;) %&gt;%  #all$ETH1   9.6
@@ -2996,7 +3115,7 @@ library(CUBESSILclumpedmath)</code></pre>
 #   change.donotuse.and.runinfo(40743, 40752.99, TRUE, &quot;possible thrown stir stick&quot;) %&gt;%   #07/01/2020 #ETH1 9.06mg
 #   change.donotuse.and.runinfo(39184,39193.99,TRUE,&quot;low gas, below 16V&quot;) #07/01/2020 #dR_1000, Batch 36: not labelling as donotuse yet, but flagging
 #   change.donotuse.and.runinfo(39299,39310.99,TRUE,&quot;funky zeros, maybe zero gas and eSSB_25 mixed?&quot;) %&gt;% #07/01/2020
-#   change.donotuse.and.runinfo(    39433,39442.99,FALSE,&quot;low gas, most Acq&#39;s below 16V&quot;)#07/01/2020 
+#   change.donotuse.and.runinfo(    39433,39442.99,FALSE,&quot;low gas, most Acq's below 16V&quot;)#07/01/2020 
 # 
 # #renaming
 #   flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 38779 &amp; flatlist.Cyc$Analysis &lt; 38790.99, &quot;Identifier 1&quot;] &lt;- &quot;all$zero&quot;  #no gas was transferred ran zero from before
@@ -3059,8 +3178,8 @@ library(CUBESSILclumpedmath)</code></pre>
 # 
 # #flatlist.Cyc &lt;- flatlist.Cyc %&gt;%
 #  #change.donotuse.and.comment(30963,30971.8,FALSE,&quot;This sample was missing from the seq and needing the next samples to be pushed down&quot;) %&gt;%
-#  #change.donotuse.and.comment(31127,31135.8,TRUE,&quot;This EHT1 is a outlier, we don&#39;t know why&quot;) %&gt;%
-#  #change.donotuse.and.comment(31181,31189.8,TRUE,&quot;This EHT2 is a outlier, we don&#39;t know why&quot;)
+#  #change.donotuse.and.comment(31127,31135.8,TRUE,&quot;This EHT1 is a outlier, we don't know why&quot;) %&gt;%
+#  #change.donotuse.and.comment(31181,31189.8,TRUE,&quot;This EHT2 is a outlier, we don't know why&quot;)
 # 
 # ##NOTE: Marina Suerez and Dusin Harper from KU ran between 07/08/2019-07/13/2019, then i jumped back on the 253. Reference frame looks contintously stable so keeping ref frame.
 # 
@@ -3074,7 +3193,7 @@ library(CUBESSILclumpedmath)</code></pre>
 #   change.donotuse.and.runinfo(31639,31648,FALSE,&quot;stir stick maybe thrown. monitor against further replicates&quot;) %&gt;% #ACF$AF-NCF-TS2-16-14
 #   change.donotuse.and.runinfo(31648,31657,FALSE,&quot;stir stick maybe thrown. monitor against further replicates&quot;) %&gt;% #ACF$AF-NCF-TS2-16-22
 #   change.donotuse.and.runinfo(31708.1,31708.4,TRUE,&quot;zero was cut short&quot;) %&gt;% #zero was cut short
-#   change.donotuse.and.runinfo(31827.1,31836, TRUE, &quot;not enough and sequence error, no gas dropped so this sample just ran previous sample&#39;s gas&quot;) %&gt;%
+#   change.donotuse.and.runinfo(31827.1,31836, TRUE, &quot;not enough and sequence error, no gas dropped so this sample just ran previous sample's gas&quot;) %&gt;%
 #   change.donotuse.and.runinfo(31827.1, 31836, TRUE, &quot;low yield, less than 12.5V&quot;) %&gt;%
 #   change.donotuse.and.runinfo(31908.1, 31917, TRUE, &quot;low yield, less than 12.5V&quot;) %&gt;%
 #   change.donotuse.and.runinfo(29625.1,29633.7,TRUE,&quot;offset from the rest of population of dR_25, keep eye on&quot;)%&gt;%
@@ -3093,7 +3212,7 @@ library(CUBESSILclumpedmath)</code></pre>
 #   change.donotuse.and.runinfo(31181.1, 31190.1,TRUE,&quot;bulk isotopes offset from the rest of population of ETH2&quot;) %&gt;%
 #   change.donotuse.and.runinfo(31392.1, 31397.1, TRUE, &quot;sample too small&quot;) %&gt;%
 #   change.donotuse.and.runinfo(31585.1, 31594.1, FALSE, &quot;sample sat in trap 2 for ~60 mins bc of a FromPy read error between computers, keep an eye one&quot;)  %&gt;%
-#   #looking at the D47vsd47 plot, it appears to fall on top of all the other dR_25 and is not labelled at D48excess... I&#39;d keep for now
+#   #looking at the D47vsd47 plot, it appears to fall on top of all the other dR_25 and is not labelled at D48excess... I'd keep for now
 #   change.donotuse.and.runinfo(31127.1, 31136.1, TRUE, &quot;bulk isotopes offset from the rest of population of ETH1&quot;) %&gt;%
 #   change.donotuse.and.runinfo(29378.1, 29383, TRUE, &quot;bulk isotopes offset from rest of populations of ETH2&quot;) %&gt;%
 #   change.donotuse.and.runinfo(30341.1, 30362, TRUE, &quot;unexplained long strain fo dR_25 and then 5 eSSB_25&quot;) %&gt;%  #dR_25 odd
@@ -3169,7 +3288,7 @@ library(CUBESSILclumpedmath)</code></pre>
 # HOR-6   | 137         | 100
 # 
 # #renaming 
-# flatlist.Cyc[ flatlist.Cyc$&#39;Identifier 1&#39; == &quot;ACF$HOR-16&quot; , &quot;Identifier 1&quot;] &lt;- &quot;ACF$HOR-6&quot;
+# flatlist.Cyc[ flatlist.Cyc$'Identifier 1' == &quot;ACF$HOR-16&quot; , &quot;Identifier 1&quot;] &lt;- &quot;ACF$HOR-6&quot;
 # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 24312 &amp; flatlist.Cyc$Analysis &lt; 24321, &quot;Identifier 1&quot;] &lt;- &quot;all$eSSB_1000&quot; #mislabeled as eSSB2_25
 # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 23849 &amp; flatlist.Cyc$Analysis &lt; 23858, &quot;Identifier 1&quot;] &lt;- &quot;all$eSSB_25&quot; #removing &quot;2&quot; from name to match other gases
 # flatlist.Cyc[  flatlist.Cyc$Analysis &gt; 23867 &amp; flatlist.Cyc$Analysis &lt; 23876, &quot;Identifier 1&quot;] &lt;- &quot;all$eSSB_25&quot;  #removing &quot;2&quot; from name to match other gases
@@ -3226,7 +3345,7 @@ library(CUBESSILclumpedmath)</code></pre>
 #   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$eIB2_1000&quot;
 # }
 # 
-# ##Need to go back and rename adam&#39;s Carraras to correct Carrara.CIT
+# ##Need to go back and rename adam's Carraras to correct Carrara.CIT
 # for (ID in c(15027:15035)){
 #   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$Carrara.CIT&quot;
 # }
@@ -3287,7 +3406,7 @@ library(CUBESSILclumpedmath)</code></pre>
 #   rawdata[ rawdata$Analysis == ID, &quot;Identifier 1&quot;] &lt;- &quot;all$ETH_2&quot;
 # }
 # 
-# ##Renaming idenitifer1&#39;s from 5/24/2018, didn&#39;t advance carousel to proper hole, so all data is offset with label by one
+# ##Renaming idenitifer1's from 5/24/2018, didn't advance carousel to proper hole, so all data is offset with label by one
 # 
 # #CIT Carrara data mislabeled in isodat as TV04
 # for (ID in c(14565:14573)){
@@ -3547,9 +3666,9 @@ library(CUBESSILclumpedmath)</code></pre>
 <p>session_date_end &lt;- 20170317</p>
 <p>session_analysis_start &lt;- 2644</p>
 <p>session_analysis_end &lt;- 3333</p>
-<pre class="r"><code>#note from ACF 20200928 - searched and cannot find data correction/processing content for AF3, except for this note: &quot;Ran throughout 02/25/2017 to 03/17/2017. Took a few standards from May to complete the reference frame (have enought TV04 to correct using Katie&#39;s code). I&#39;m dubious about trusting replicates from this session b/c of the weak reference frame. </code></pre>
-<div id="note-that-af1-af2-dont-really-exist-bc-they-were-session-where-i-was-learning-data-production-and-i-dont-have-data-processing-record-of-those-times-but-i-started-my-session-numbering-system-at-af3-idk-early-grad-school-decisions.-also-i-didnt-start-to-consistently-use-af-format-until-af6-so-there-are-mismatched-session-labels." class="section level6">
-<h6>note that AF1-AF2 don’t really exist bc they were session where I was learning data production and I don’t have data processing record of those times, but I started my session numbering system at AF3 (idk, early grad school decisions…). Also I didn’t start to consistently use AF# format until AF6, so there are mismatched session labels.</h6>
+<pre class="r"><code>#note from ACF 20200928 - searched and cannot find data correction/processing content for AF3, except for this note: &quot;Ran throughout 02/25/2017 to 03/17/2017. Took a few standards from May to complete the reference frame (have enought TV04 to correct using Katie's code). I'm dubious about trusting replicates from this session b/c of the weak reference frame. </code></pre>
+<div id="note-that-af1-af2-dont-really-exist-bc-they-were-session-where-i-was-learning-data-production-and-i-dont-have-data-processing-record-of-those-times-but-i-started-my-session-numbering-system-at-af3-idk-early-grad-school-decisions.-also-i-didnt-start-to-consistently-use-af-format-until-af6-so-there-are-mismatched-session-labels." class="section level5">
+<h5>note that AF1-AF2 don’t really exist bc they were session where I was learning data production and I don’t have data processing record of those times, but I started my session numbering system at AF3 (idk, early grad school decisions…). Also I didn’t start to consistently use AF# format until AF6, so there are mismatched session labels.</h5>
 </div>
 </div>
 </div>

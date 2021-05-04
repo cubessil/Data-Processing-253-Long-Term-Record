@@ -35,6 +35,10 @@ library(CUBESSILclumpedmath)
 #### - Copy/paste from your data reduction code for each session that renames, alters metadata, or culls analysis numbers. 
 #### - Accumulate sessions from most recent to least.
 
+
+
+
+
 ___TEMPLATE START___
 
 ### TEMPLATE: "Analysis Range" - "User" - "Session Name"
@@ -60,6 +64,139 @@ session_analysis_end <- #####
 ```
 
 ___TEMPLATE END___
+
+
+
+
+
+
+### 48525 to 52232 - ACF - AF11
+
+User <- "ACF, BJDK"
+
+session <-"AF11" -- name you gave your session
+
+session_date_start <- 20210302 
+
+session_date_end <- 20210429
+
+session_analysis_start <- 48525
+
+session_analysis_end <- 52232
+
+```{r 48525 to 52232 - ACF - AF11}
+# # put these 3 lines under the "clumped math" chunk in p1 code, need to edit the prep and ID 2 before trying to batch, otherwise batching plot won't work
+# rawdata[  rawdata$Analysis > 49135 & rawdata$Analysis < 49140.99, "Identifier 1"] <- "ACF$all$zero" #20210312, c/p error for naming of zero, adding user
+# rawdata[  rawdata$Analysis > 49135 & rawdata$Analysis < 49140.99, "Identifier 2"] <- "0" #20210312, c/p error for naming of zero, adding user
+# rawdata[  rawdata$Analysis > 49135 & rawdata$Analysis < 49140.99, "Preparation"] <- "z" #20210312, c/p error for naming of zero, adding Preparation 
+# 
+# #TEMPLATE for AF11 session
+# #flatlist.Cyc <- flatlist.Cyc %>% change.donotuse.and.runinfo(#####, #####.99, TRUE, "COMMMENT") #DATE #FURTHER NOTES
+# 
+# # Notes from this run
+# #   Heated gases hadn't been fired since 09/2020, I ran one dR and eSSB before I remembered to refire them, for 4 hours at 1000C in furnace. refired dR_1000 on 03/09/2020 and refired eSSB_1000 on 03/10/2021
+# #   --- interesting experiment to show how heated gases reequilibrate to room temperature over time.
+# #   
+# 
+# #marking "Donotuse" or adding comment
+# flatlist.Cyc <- flatlist.Cyc %>% 
+# #HG - old fire
+#   change.donotuse.and.runinfo(48645, 48654.99, TRUE, "Hadn't been fired since 09/20 (~6 months before). D47 much lower than expected") %>% #20210305, dR_1000, D47 much lower than expected. HG not fired since September 2020
+#   change.donotuse.and.runinfo(48655, 48664.99, FALSE, "Hadn't been fired since 09/20 (~6 months before). D47 much lower than expected") %>% #20210305, eSSB_1000, HG not fired since September 2020
+#   change.donotuse.and.runinfo(48700, 48709.99, FALSE, "Potentially contaminated std vial? Doesn't have high 48, but from same suspect vial") %>% #ETH1, Doesn't have high 48, but from same suspect vial
+#   
+# ## ETH1 high 48 - first  
+#   change.donotuse.and.runinfo(48760, 48769.99, TRUE, "High d48background, d48sd, D48 excess. Contaminated std vial?") %>% #20210307, ETH1, high d48background, d48sd, D48 excess. Contaminated std vial?
+#   change.donotuse.and.runinfo(48770, 48779.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess") %>% #20200307, ETH3, d48 background high but decreasing
+# #HG - old fire
+#   change.donotuse.and.runinfo(48780, 48789.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Hadn't been fired since 09/20 (~6 months before).") %>% #20200307, dR_1000, d48 background high but decreasing. HG not fired since September 2020
+#   change.donotuse.and.runinfo(48790, 48799.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Contaminated std vial?") %>% #20200307, ETH1 d48 background high but decreasing. Contaminated std vial?
+#   change.donotuse.and.runinfo(48800, 48809.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Stir stick maybe thrown?") %>% #20200307, ETH2, d48 background high but decreasing
+#   change.donotuse.and.runinfo(48810, 48819.99, FALSE, "1st sample that 48bkgrd looks back to normal after high d48 from ETH1. Stir stick maybe thrown?") %>% #20210308, ETH2, stir stick maybe thrown?
+#   change.donotuse.and.runinfo(48820, 48829.99, FALSE, "48bkgrd looks back to normal after high d48 from ETH1. Stir stick thrown") %>% #20210308, ETH3, stir stick maybe thrown
+# 
+# ## ETH1 high 48 - second  
+#   change.donotuse.and.runinfo(48830, 48839.99, TRUE, "High d48background, d48sd, D48 excess. stir stick thrown. Contaminated std vial?") %>% #20210308, ETH1, high d48background, d48sd, D48 excess. Stir stick maybe thrown. Contaminated std vial?
+# #HG - old fire
+#   change.donotuse.and.runinfo(48840, 48849.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess. Hadn't been fired since 09/20 (~6 months before).") %>% #202103, eSSB_1000
+#   change.donotuse.and.runinfo(48850, 48859.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess.") %>% #20210308, dR_25, double shot
+#   change.donotuse.and.runinfo(48860, 48869.99, TRUE, "Elevated 48 background, following ETH1 with high d48 bkgrd and D48 excess.") %>% #20210308, CU YULE
+#   change.donotuse.and.runinfo(48870, 48879.99, TRUE, "no gas, carousel error?") %>% #20210308, ETH1, no gas...? potential carousel error, makes sense bc next sample doesn't match ETH2 values 
+#   change.donotuse.and.runinfo(48880, 48889.99, TRUE, "carousel error? no gas for sample before, and this one does not match ETH2 bulk values or D47") %>% #20210308, labeled as ETH2, but doesnt match population.... mystery?! also HUGE yield... combination of the powder before? but no stir stick issue...
+#   change.donotuse.and.runinfo(48890, 48899.99, FALSE, "1st sample that 48bkgrd looks back to normal after high d48 from ETH1.") %>% #20210308, AF-NCF-TS2-17-21.5C, 48 background back to low levels
+#   
+#   change.donotuse.and.runinfo(48980, 48989.99, FALSE, "Potentially contaminated std vial? Doesn't have high 48, but from same suspect vial") %>% #ETH1
+#   change.donotuse.and.runinfo(49010, 49019.99, TRUE, "high std residual. Contaminated std vial?") %>% #20210310, ETH1
+#   change.donotuse.and.runinfo(49030, 49039.99, TRUE, "high std residual") %>%  #20210310, ETH3
+#   change.donotuse.and.runinfo(49080, 49089.99, FALSE, "Potentially contaminated std vial? Doesn't have high 48, but from same suspect vial") %>% #ETH1
+# #HG - new fire
+#   change.donotuse.and.runinfo(49131, 49134.99, TRUE, "accidently pumped 1/2 of dR away. fired 03/09/2021") %>% #20210312, dR_1000, sequence user error, pumped away, newly fired
+# #HG - new fire
+#   change.donotuse.and.runinfo(49141, 49150.99, FALSE, "fired 03/10/2021") %>%  #20210312, eSSB_1000, fired by ACF on 03/10/2021, compare to previous HG that were fired in 09/20
+#   change.donotuse.and.runinfo(49151, 49160.99, FALSE, "Stir stick maybe thrown?") %>%  #20210312, ETH2, 8.22mg
+#   change.donotuse.and.runinfo(49161, 49170.99, FALSE, "Stir stick maybe thrown? watch for yield issue") %>% #20210312, AF-NCF-TS-323-A.dark ... run another replicate in case of yield issue
+#   change.donotuse.and.runinfo(49171, 49180.99, FALSE, "Stir stick maybe thrown? watch for yield issue") %>% #20210313, ETH3, 8.59mg
+# ## NEW STANDARD VIAL OF ETH1 opened on 03/12/2021 -- Analysis 49201
+#   change.donotuse.and.runinfo(49201, 49210.99, FALSE, "first replicate of new ETH1 standard vial opened by ACF on 03/12/2021") %>%#20210313, ETH1
+# #did something get contaminated or messed up? 
+#   change.donotuse.and.runinfo(49426, 49435.99, TRUE, "high std deviation") %>%#20210316 ETH3
+#   change.donotuse.and.runinfo(49446, 49455.99, TRUE, "rep different than the rest in D47 and bulk isos") %>% #20210316, ETH2 cull 
+#   change.donotuse.and.runinfo(49456, 49465.99, TRUE, "rep different than the rest in D47 and bulk isos") %>% #20210316, ETH1 cull 
+#   change.donotuse.and.runinfo(49506, 49515.99, TRUE, "rep different than the rest in D47 and bulk isos") %>% #20210317, ETH4
+#   change.donotuse.and.runinfo(49516, 49525.99, TRUE, "rep different than the rest in D47 and bulk isos") %>% #20210317, ETH2
+#   change.donotuse.and.runinfo(49526, 49535.99, TRUE, "rep different than the rest in D47 and bulk isos") %>%  #20210317, TS-323-A.dark, cull later?
+#   change.donotuse.and.runinfo(49536, 49545.99, TRUE, "rep different than the rest in D47 and d18O") %>% #20210317, TS2-17-21.5D
+#   change.donotuse.and.runinfo(49557, 49566.99, TRUE, "high std residuals") %>% #20210318 ETH3
+#   change.donotuse.and.runinfo(51113, 51122.99, TRUE, "rep diff in D47 and D48") %>% #20210412, dR_25
+#   change.donotuse.and.runinfo(51462, 51471.99, TRUE, "rep diff in D47 and D48") %>% #20210417, ETH4
+#   change.donotuse.and.runinfo(51492, 51501.99, TRUE, "rep diff in D47 and D48") %>%  #20210417, ETH2
+#   change.donotuse.and.runinfo(51472, 51481.99, FALSE, "between two high D48 std, watch") %>%  #20210417 TS-323-A.light
+#   change.donotuse.and.runinfo(51482, 51491.99, FALSE, "between two high D48 std, watch") %>%  #20210417 TS3-16-10
+#   change.donotuse.and.runinfo(51552, 51552.99, TRUE, "bad acq") %>%  #20210418 TS3-16-13
+#   change.donotuse.and.runinfo(51512, 51512.99, TRUE, "bad acq") %>%  #20210418  TS3-16-20.gen2
+#   change.donotuse.and.runinfo(51599.8, 51599.9, TRUE, "outlier cycle") %>%  #ACF$Knc$AF-NCF-TS2-17-21.5A.dark
+#   change.donotuse.and.runinfo(51602.4, 51602.5, TRUE, "outlier cycle") %>%  #ACF$Knc$AF-NCF-TS2-17-21.5A.dark
+#   change.donotuse.and.runinfo(51630.1, 51630.2, TRUE, "outlier cycle") %>%  #ACF$Knc$AF-NCF-TS2-17-21.5E.light 
+#   change.donotuse.and.runinfo(49731.1, 49731.2, TRUE, "outlier cycle") %>%  #ACF$Knc$AF-NCF-TS3-16-10
+#   change.donotuse.and.runinfo(51559.4, 51559.5, TRUE, "outlier cycle") %>%  #ACF$Knc$AF-NCF-TS3-16-05
+#   change.donotuse.and.runinfo(51567.1, 51567.2, TRUE, "outlier Acq") %>%  #AF$Knc$AF-NCF-TS3-16-05  
+#   change.donotuse.and.runinfo(51738, 51747.99, TRUE, "high std residual") %>%  #20210423, ETH2
+#   change.donotuse.and.runinfo(51869, 51878.99, TRUE, "high std residual") %>%  #20210423, ETH2
+#   change.donotuse.and.runinfo(52029, 52038.99, FALSE, "new ETH3 vial, opened by ACF 04/23/2021") %>% 
+#   change.donotuse.and.runinfo(52129, 52138.99, FALSE, "new ETH3 vial, opened by ACF 04/23/2021") %>% 
+#   change.donotuse.and.runinfo(52199, 52208.99, FALSE, "last of older ETH3 vial") #ETH3, new vial opened by ACF 04/23/2021
+# 
+# #renaming
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 48880 & flatlist.Cyc$Analysis < 48889.99, "Identifier 1"] <- "ACF$all$gasmix" #20210311, labeled as ETH2, but is a mixture of gases bc of carousel error 
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 49060 & flatlist.Cyc$Analysis < 49069.99, "Identifier 1"] <- "ACF$all$ETH2" #20210311, mislabeled as ETH3 in runlist, should be ETH2
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 49135 & flatlist.Cyc$Analysis < 49140.99, "Identifier 1"] <- "ACF$all$zero" #20210312, c/p error for naming of zero, adding user
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 49135 & flatlist.Cyc$Analysis < 49140.99, "Preparation"] <- "z" #20210312, c/p error for naming of zero, adding Preparation
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 49873 & flatlist.Cyc$Analysis < 49882.99, "Identifier 1"] <- "ACF$all$ETH1" #carousel error caused mislabelling, ETH1 mislabled as ETH4
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 49883 & flatlist.Cyc$Analysis < 49892.99, "Identifier 1"] <- "ACF$all$ETH4" #carousel error caused mislabelling, ETH4 mislabled as ETH3
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 49893 & flatlist.Cyc$Analysis < 49902.99, "Identifier 1"] <- "ACF$all$ETH3" #carousel error caused mislabelling, ETH3 mislabelled as ETH2
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 51548 & flatlist.Cyc$Analysis < 51557.99, "Identifier 1"] <- "ACF$Knc$AF-NCF-TS3-16-13" # didn't use the 13.gen2.light bottled used original TS3-16-13
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 51598 & flatlist.Cyc$Analysis < 51607.99, "Identifier 1"] <- "ACF$Knc$AF-NCF-TS2-17-21.5A.dark" #used "." instead of "-"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 52089 & flatlist.Cyc$Analysis < 52098.99, "Identifier 1"] <- "ACF$all$dR_1000" 
+# 
+# #Missed a dR_25 and so some data needs to be moved up one.
+# flatlist.Cyc <- getmetadatafromAnalysis(flatlist.Cyc, 50141, 50150.99, 50131)
+# flatlist.Cyc <- getmetadatafromAnalysis(flatlist.Cyc, 50131, 50140.99, 50121)
+# flatlist.Cyc <- getmetadatafromAnalysis(flatlist.Cyc, 50121, 50130.99, 50111)
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 50111 & flatlist.Cyc$Analysis < 50120.99, "Identifier 1"] <- "BJDK$all$dR_25"
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 50111 & flatlist.Cyc$Analysis < 50120.99, "Identifier 2"] <- "0" 
+# 
+# # The carousel went haywire and then got stuck. Analaysis 50304 to 50343 either has no gas or did not drop.
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#           change.donotuse.and.runinfo(50304, 50343.99, TRUE, "carousel stoped working correctly") %>%  
+#           change.donotuse.and.runinfo(50304, 50343.99, TRUE, "carousel stoped working correctly")
+# flatlist.Cyc <- getmetadatafromAnalysis(flatlist.Cyc, 50515, 50515.99, 50514)# last basic aq for ETH3 got the lable for the next ETH4
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 50515 & flatlist.Cyc$Analysis < 50515.99, "batch"] <- 171 #fix the batch number so Sample.ID works correctly
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 50586 & flatlist.Cyc$Analysis < 50595.99, "Identifier 1"] <- "ACF$all$ETH3" #the seq didn't match the paper runlist
+# flatlist.Cyc[  flatlist.Cyc$Analysis > 50586 & flatlist.Cyc$Analysis < 50595.99, "Identifier 2"] <- "8.89"
+# #50515
+# 
+```
+
 
 ### 42224 to 44648 - ACF - AF10
 
