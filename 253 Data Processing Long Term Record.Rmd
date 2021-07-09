@@ -81,7 +81,7 @@ session_analysis_start<- 52402
 
 session_analysis_end <- 55545
 
-```{r Data correction info - template}
+```{r 52402 to 55545 - ACF - AF12}
 
 #TEMPLATE for AF12 session
 #flatlist.Cyc <- flatlist.Cyc %>% change.donotuse.and.runinfo(#####, #####.99, TRUE, "COMMMENT") #DATE #FURTHER NOTES
