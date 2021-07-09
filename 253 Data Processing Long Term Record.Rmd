@@ -67,7 +67,168 @@ ___TEMPLATE END___
 
 
 
+### 52402 to 55545 - ACF - AF12
 
+User <- "ACF, BJDK" 
+
+session <-"AF12" 
+
+session_date_start <- 20210506 
+
+session_date_end <- 20210709
+
+session_analysis_start<- 52402
+
+session_analysis_end <- 55545
+
+```{r Data correction info - template}
+
+#TEMPLATE for AF12 session
+#flatlist.Cyc <- flatlist.Cyc %>% change.donotuse.and.runinfo(#####, #####.99, TRUE, "COMMMENT") #DATE #FURTHER NOTES
+
+# Notes from this run
+# - We noticed high standard deviations in bulk isotopes in early May, so Brett did a full bake and tune of the source. The standards on the front side of this run are what he ran to reestablish reference frame after full tune. 
+# - BJDk ran in LIDI mode before 52819, so those are filtered out at the end of this P1 code. Otherwise the session is run in Fiebig, 10 acqs of 10 cycles. 
+# - 06/02/2021, BJDK noticed a step in the middle of m44 peak during a peak scan. He autotuned on 06/03/2021 between53273 and 53274. Use Analysis > 53274 for post autotuning reference frame.
+# - back LN trap ran out of LN around noon on sunday, 06/06/2021 (Analysis ~ 53497 (not fully sure when it got warm). Continued to run through early AM on 06/07 (were waiting for LN delivery)
+# - 07/09/2021. We decided to stop running because we suspect that the poropak need to be changed and that the source needs to be cleaned. Evidence for dirty source: 48 background seems to be moving (going less than 0), higher standard deviations on all masses, and reference frame potenitally rotating. Evidence for dirty poropak: Lots of standards getting flagged as maybe D48 excess, high mean standard residuals, and high d48 std deviations, ETH3 getting flagged as Mayb 48excess (before when the poropak needed to be changed, ETH1 was replicating fine and then started coming through looking contaminated. So many this is happening with the ETH3 (ie the sampel carbonate material, that just hasn't been heated) . Problems started after the double clean tests, so potentially stacked the double cleans don't let the GC heat up and bake for long enough and so its not getting cleaned properly between samples (?).
+
+#  Double Clean test 07/01 into 07/02/2021: Double Clean experiment update with some more data points.
+# The take away: I’m not convinced — both from the topes and gas transfer consistency perspectives :confused_parrot::angryparrot::everythingisfineparrot:
+# Gas transfer reliability: I ran more double clean tests over the weekend and currently the double cleaned gas is successfully transferred into the bellows 50% of the time. For the first two automated double clean yules, no gas made it to the bellows. I watched both of those tests throughout the autoline run and didn’t see any major issues (ex: like it did warm up T2 when the bellows were ready to receive new gas). I ran two more the subsequent day, using the double clean autoline script and starting each with the 253 sequence (new method: Fiebig_DoubleClean_start.met), and both of those had gas make it to the bellows. I’ve thought a lot about what could have been different between those two different sets of double clean tests and can’t think of anything different between them to make some successful and some gasless. When I went into the lab the morning after the two unsuccessful tests, I didn’t find any issues with the autoline set up (i.e. like leaving some valve closed like a dumdum or stir stick was thrown). I think I need to run more tests to convince myself that the process is going to consistently deliver gas before running any samples.
+# Wacka-topes: The first four plots show d13C, d18O, d47, D47 by Analysis. I’ve left 3 regular normal clean samples (prep = F,G,H) in all the plots to show where CU YULE sits normally. d13C: The three Auto DC that did transfer gas are all offset to less negative d13C values (offset ranging from .4 to 1.4permil).  d18Oc: The manual transfer double clean is the most offset from rest of pop, with the lowest d18Oc values. Generally, all the yules (DC or single clean) run in this time chunk are less consistent than the population over the full run session. D47: All the methods produce similar D47 values except the last Auto DC, which produced a much less negative D47. The yield line is the last plot: the auto DC for similar masses are at least coming up with similar yields
+# Double clean test order:
+# 54926-54935, 11.30, manual double clean, did pump away some sample when froze from bellows to finger, Prep = Manual Transfer DC
+# 54936-54945, 10.71, automated double clean, Prep = changed to Auto DC
+# 54946-54955, 9.98, single clean (normal run), Prep = Single Clean
+# 55061-55070, 10.16, auto double clean test, gas didn’t transfer, started with 253 seq method, Prep = Auto DC
+# 55071-55072, 10.14, auto double clean test, gas didn’t transfer, started with doubleclean button on autoline, Prep = Auto DC
+# 55074-55083, 10.17, single clean, Prep = Single Clean
+# 55084-55093, 10.22, single clean, Prep = Single Clean
+# 55107-55116, 9.71, double clean test, gas transferred!, started with 253 seq method, Prep = Auto DC
+# 55117-55126, 9.82, double clean test, gas transferred!, started with 253 seq method, Prep = Auto DC
+
+# #marking "Donotuse" or adding comment
+
+# flatlist.Cyc <- flatlist.Cyc %>% 
+#   change.donotuse.and.runinfo(52871, 52871.99, TRUE, "ran with way to high a voltage") %>% 
+#     change.donotuse.and.runinfo(52820, 52821, TRUE, "high 18O and 13C std dev") %>%  #CU YULE
+#   change.donotuse.and.runinfo(52945, 52951.99, TRUE, "D48 excess zero") %>% 
+#   change.donotuse.and.runinfo(52984, 52993.99, TRUE, "high mean std residual") %>%  #ETH3, 20210526
+#   change.donotuse.and.runinfo(53044, 53055.99, TRUE, "high mean std residual") %>%  #ETH2, 20210527
+#     change.donotuse.and.runinfo(53117, 53118, TRUE, "high 13C std dev") %>%  #GU1
+#   change.donotuse.and.runinfo(53143, 53155.99, TRUE, "D48 excess") %>% #zero
+#   change.donotuse.and.runinfo(53156, 53165.99, TRUE, "high mean std residual") %>%  #CU YULE, 20210601
+#   change.donotuse.and.runinfo(53166, 53175.99, TRUE, "high mean std residual") %>%  #ETH2, 20210601
+#   change.donotuse.and.runinfo(53176, 53185.99, TRUE, "high mean std residual") %>%  #IAEA-C2, 20210601
+#   change.donotuse.and.runinfo(53186, 53195.99, TRUE, "high mean std residual") %>%  #ETH4, 20210601
+#   change.donotuse.and.runinfo(53196, 53205.99, TRUE, "high mean std residual") %>%  #ETH3, 20210601
+#     change.donotuse.and.runinfo(53212, 53213, TRUE, "high 18O and 13C std dev") %>% #eSSB_1000
+#   change.donotuse.and.runinfo(53236, 53245.99, TRUE, "high mean std residual") %>%  #IAEA-C2, 20210602
+#   change.donotuse.and.runinfo(53226, 53235.99, TRUE, "high mean std residual") %>%  #ETH2, 20210603
+#   change.donotuse.and.runinfo(53246, 53255.99, TRUE, "high mean std residual") %>%  #ETH4, 20210603
+#   change.donotuse.and.runinfo(53256, 53265.99, TRUE, "high mean std residual") %>%  #ETH3, 20210603
+#   change.donotuse.and.runinfo(53305, 53314.99, TRUE, "high mean std residual") %>%  #ETH3, 20210603
+#   change.donotuse.and.runinfo(53406, 53416.99, TRUE, "high mean std residual") %>%  #ETH2, 20210605
+#   change.donotuse.and.runinfo(53497, 53506.99, TRUE, "high mean std residual") %>%  #ETH4, 20210606
+#     change.donotuse.and.runinfo(53519, 53520, TRUE, "high 18O and 13C std dev") %>% #zero
+#   change.donotuse.and.runinfo(53543, 53552.99, TRUE, "high mean std residual") %>%  #ETH4, 20210607
+#     change.donotuse.and.runinfo(53487, 53488, TRUE, "high 18O and 13C std dev") %>% #ETH3
+#   change.donotuse.and.runinfo(53553, 53562.99, TRUE, "high mean std residual") %>%  #ETH2, 20210607
+#     change.donotuse.and.runinfo(53613, 53622.99, TRUE, "low yield rep") %>% #AF-NCF-TS-317-B.brown, 20210608
+#     change.donotuse.and.runinfo(53603, 53612.99, TRUE, "low yield rep") %>% #AF-NCF-TS-317-A, 20210608
+#   change.donotuse.and.runinfo(53892, 53901.99, TRUE, "high mean std residual") %>%  #ETH3, 20210612
+#   change.donotuse.and.runinfo(54022, 54031.99, TRUE, "high mean std residual") %>%  #ETH4, 20210614
+#   change.donotuse.and.runinfo(54072, 54081.99, TRUE, "very high std residual") %>%  #ETH2, 20210615
+#   change.donotuse.and.runinfo(54172, 54181.99, TRUE, "high mean std residual") %>%  #ETH2, 20210616
+#   change.donotuse.and.runinfo(54213, 54222.99, TRUE, "atm in ref gas bc of Delta move") %>% #AF-NCF-TS-317-D.dark
+#   change.donotuse.and.runinfo(54223, 54232.99, TRUE, "atm in ref gas bc of Delta move") %>% #AF-NCF-TS3-16-10
+#   change.donotuse.and.runinfo(54233, 54242.99, TRUE, "atm in ref gas bc of Delta move") %>% #ETH3, 20210617
+#   change.donotuse.and.runinfo(54365, 54374.99, TRUE, "high amt of gas with 3 shots, high d48 background and std devs in all isos") %>%  #eSSB_25, triple shot out of bottle (105mBar - huge!). ran a 2 shot next day...  much better amt of gas
+# 
+#   change.donotuse.and.runinfo(54132, 54141.99, TRUE, "high mean std residual") %>% #ETH3, 20210616
+#   change.donotuse.and.runinfo(54461, 54470.99, TRUE, "high mean std residual") %>% #ETH3, 20210621
+#   change.donotuse.and.runinfo(54511, 54520.99, TRUE, "high mean std residual") %>% #ETH3, 20210623
+#   change.donotuse.and.runinfo(54642, 54644.99, TRUE, "not enough gas") %>%  #AF-NCF-TS-317-E, 20210624
+#   change.donotuse.and.runinfo(54622, 54631.99, TRUE, "high 48 background") %>%  #ETH4, 20210625
+# 
+#   change.donotuse.and.runinfo(54521, 54530.99, TRUE, "high std dev in bulk isos and high temp -- D48 excess?") %>%  #AF-NCF-TS5-17-01, 06/21/2021, very high temp (100C). potentially brought in some contam and caused suite of samples afterwards to have high std dev in bulk isos. going to test sample with a double clean procedure to see if temp reduces and std devs are better. run another rep of the samples after - still giving high std dev?
+#   change.donotuse.and.runinfo(54531, 54540.99, FALSE, "high std dev in bulk isos") %>% #AF-NCF-TS5-17-07, 06/21/2021
+#   change.donotuse.and.runinfo(54541, 54550.99, FALSE, "high std dev in bulk isos") %>% #AF-NCF-TS5-17-13, 06/21/2021  
+#   change.donotuse.and.runinfo(54571, 54580.99, TRUE, "high std dev in bulk isos") %>%  #AF-NCF-TS2-16-31.yellow, 20210621
+#   change.donotuse.and.runinfo(53593, 53602.99, TRUE, "rep diff from 3 others in bulk isos and D47") %>% #AF-NSF-TS5-17-26, 20210606
+#   change.donotuse.and.runinfo(54541, 54550.99, TRUE, "low yield rep") %>% #AF-NCF-TS5-17-13, 20210621
+#   change.donotuse.and.runinfo(54676, 54685.99, TRUE, "offset from pop in D47d47 space") %>% #ETH2, 20210625
+# 
+# #after double clean tests, something over July 2nd to 4th didn't run well. high mean std residual. 
+#   change.donotuse.and.runinfo(55127, 55136.99, TRUE, "high std mean residual") %>% #%>% #ETH4, 20210702
+#   change.donotuse.and.runinfo(55137, 55146.99, TRUE, "high std mean residual") %>% #ETH3, 20210702
+#   change.donotuse.and.runinfo(55147, 55156.99, TRUE, "high std mean residual") %>% #ETH2, 20210702
+#   change.donotuse.and.runinfo(55157, 55166.99, TRUE, "high std mean residual") %>% #IAEA-C2, 20210702
+#     change.donotuse.and.runinfo(55167, 55176.99, FALSE, "check rep, surrounded by std with high std mean residual") %>% #AF-NCF-TS2-17-30A.matrix
+#     change.donotuse.and.runinfo(55177, 55186.99, FALSE, "check rep, surrounded by std with high std mean residual") %>%  #AF-NCF-TS-317-D.dark
+#     change.donotuse.and.runinfo(55187, 55196.99, FALSE, "check rep, surrounded by std with high std mean residual") %>%  #AF-NCF-TS-323-D.dark
+#   change.donotuse.and.runinfo(55197, 55206.99, TRUE, "high std mean residual") %>% #ETH2 07/03
+#     change.donotuse.and.runinfo(55217, 55226.99, FALSE, "check rep, surrounded by std with high std mean residual") %>%  #AF-NCF-TS2-16-31.red
+#     change.donotuse.and.runinfo(55227, 55236.99, FALSE, "check rep, surrounded by std with high std mean residual") %>%  #AF-NCF-TS2-17-30C
+#   change.donotuse.and.runinfo(55237, 55246.99, FALSE, "check rep, surrounded by std with high std mean residual") %>%  #AF-NCF-TS2-17-21.5C
+#   change.donotuse.and.runinfo(55257, 55266.99, TRUE, "high std mean residual") %>% #IAEA-C2, 20210703
+#   change.donotuse.and.runinfo(55267, 55276.99, TRUE, "high std mean residual") %>% #ETH2, 20210704
+#   change.donotuse.and.runinfo(55277, 55286.99, TRUE, "high std mean residual") %>% #ETH4, 20210704
+#     change.donotuse.and.runinfo(55287, 55296.99, FALSE, "check rep, surrounded by std with high std mean residual") %>%  #AF-NCF-TS2-17-21.5D
+#     change.donotuse.and.runinfo(55297, 55306.99, FALSE, "check rep, surrounded by std with high std mean residual") %>% #AF-NCF-TS3-16-06.gen2 07/04
+#   change.donotuse.and.runinfo(55327, 55334.99, TRUE, "high d48 std dev") %>% #ETH4, 20210705
+#   change.donotuse.and.runinfo(55377, 55386.99, TRUE, "yield issue - split powder") %>%  #ETH3, 20210706
+#   change.donotuse.and.runinfo(55367, 55376.99, TRUE, "low starting pressure") %>% #zero, 20210706
+#   change.donotuse.and.runinfo(55437, 55445.99, TRUE, "low starting pressure") %>% #zero, 20210707
+#   change.donotuse.and.runinfo(55476, 55485.99, TRUE, "yield issue - stir stick thrown") %>%  #ETH3, 20210708
+#   change.donotuse.and.runinfo(55496, 55505.99, TRUE, "high d48 std dev") %>%  #IAEA-C2, 20210708
+#   change.donotuse.and.runinfo(55506, 55515.99, TRUE, "high d48 std dev") %>% #ETH4, 20210708
+#   change.donotuse.and.runinfo(55526, 55535.99, TRUE, "high d48 std dev") #ETH4, 20210708
+# 
+# #renaming
+#   #flatlist.Cyc[  flatlist.Cyc$Analysis > 48880 & flatlist.Cyc$Analysis < 48889.99, "Identifier 1"] <- "ACF$all$gasmix"
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53285 & flatlist.Cyc$Analysis < 53294.99, "Identifier 1"] <- "ACF$all$eSSB_1000"
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53166 & flatlist.Cyc$Analysis < 53175.99, "Identifier 1"] <- "ACF$all$ETH2"
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53186 & flatlist.Cyc$Analysis < 53195.99, "Identifier 1"] <- "ACF$all$ETH4"
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53196 & flatlist.Cyc$Analysis < 53205.99, "Identifier 1"] <- "ACF$all$ETH3"
+# #carousel ahead by one of the sequence number - 06/07/2021 into 06/08/2021
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53533 & flatlist.Cyc$Analysis < 53542.99, "Identifier 1"] <- "ACF$all$IAEA-C2" #mislabeled as ETH2  
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 53533 & flatlist.Cyc$Analysis < 53542.99, "Identifier 2"] <- "10.99" #mislabeled as ETH2
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53543 & flatlist.Cyc$Analysis < 53552.99, "Identifier 1"] <- "ACF$all$ETH4" #mislabeled as IAEA-C2
+#       flatlist.Cyc[  flatlist.Cyc$Analysis > 53543 & flatlist.Cyc$Analysis < 53552.99, "Identifier 2"] <- "9.42" #mislabeled as IAEA-C2  
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53553 & flatlist.Cyc$Analysis < 53562.99, "Identifier 1"] <- "ACF$all$ETH2" #mislabeled as ETH4
+#       flatlist.Cyc[  flatlist.Cyc$Analysis > 53553 & flatlist.Cyc$Analysis < 53562.99, "Identifier 2"] <- "8.68" #mislabeled as ETH4
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53563 & flatlist.Cyc$Analysis < 53572.99, "Identifier 1"] <- "ACF$all$CU YULE" #mislabeled as ETH2
+#       flatlist.Cyc[  flatlist.Cyc$Analysis > 53563 & flatlist.Cyc$Analysis < 53572.99, "Identifier 2"] <- "8.37" #mislabeled as ETH2
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 53573 & flatlist.Cyc$Analysis < 53582.99, "Identifier 1"] <- "ACF$all$ETH4" #mislabeled as CU YULE
+#       flatlist.Cyc[  flatlist.Cyc$Analysis > 53573 & flatlist.Cyc$Analysis < 53582.99, "Identifier 2"] <- "7.83" #mislabeled as CU YULE
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 54646 & flatlist.Cyc$Analysis < 54655.99, "Identifier 1"] <- "ACF$all$eSSB_25" #left out all project label
+#   flatlist.Cyc[  flatlist.Cyc$Analysis > 55136 & flatlist.Cyc$Analysis < 55137, "Identifier 2"] <- "8.23"
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55136 & flatlist.Cyc$Analysis < 55137, "preparation"] <- "G"
+#   
+#   
+# # CU YULE used for double clean test to compare manual to automated double clean
+# #54926-54935, 11.30, manual double clean, did pump away some sample when froze from bellows to finger, Prep = M
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 54926 & flatlist.Cyc$Analysis < 54935.99, "Preparation"] <- "Manual Transfer DC"
+# #54936-54945, 10.71, automated double clean, Prep = D
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 54936 & flatlist.Cyc$Analysis < 54945.99, "Preparation"] <- "Auto DC"   
+# #54946-54955, 9.98, single clean (normal run), Prep = F
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 54946 & flatlist.Cyc$Analysis < 54955.99, "Preparation"] <- "Single Clean" 
+# #55061-55070, 10.16, auto double clean test, gas didn't transfer, started with 253 seq method, Prep = D 
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55061 & flatlist.Cyc$Analysis < 55070.99, "Preparation"] <- "Auto DC"    
+# #55071-55072, 10.14, auto double clean test, gas didn't transfer, started with doubleclean button on autoline, Prep = D   
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55071 & flatlist.Cyc$Analysis < 55072.99, "Preparation"] <- "Auto DC"    
+# #55074-55083, 10.17, single clean, Prep = G
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55074 & flatlist.Cyc$Analysis < 55083.99, "Preparation"] <- "Single Clean" 
+# #55084-55093, 10.22, single clean, Prep = F
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55084 & flatlist.Cyc$Analysis < 55093.99, "Preparation"] <- "Single Clean" 
+# #55107-55116, 9.71, double clean test, gas transfered, started with 253 seq method, Prep = D
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55107 & flatlist.Cyc$Analysis < 55116.99, "Preparation"] <- "Auto DC"  
+# #55117-55126, 9.82, double clean test, gas transfered, started with 253 seq method, Prep = F
+#     flatlist.Cyc[  flatlist.Cyc$Analysis > 55117 & flatlist.Cyc$Analysis < 55126.99, "Preparation"] <- "Auto DC"   
+
+```
 
 
 ### 48525 to 52232 - ACF - AF11
